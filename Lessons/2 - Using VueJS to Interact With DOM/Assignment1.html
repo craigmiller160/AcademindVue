@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment1</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="exercise">
+        <p>VueJS is pretty cool - {{ name }} {{ age }}</p>
+        <p>{{ age * 3 }}</p>
+        <p v-once>Random Number: {{ randomNumber() }}</p>
+        <div>
+            <img v-bind:src="img" />
+        </div>
+        <div>
+            <input type="text" v-on:input="updateName" v-bind:value="name" />
+        </div>
+    </div>
+<script>
+    new Vue({
+        el: '#exercise',
+        data: {
+            name: 'Craig Miller',
+            age: 29,
+            img: 'http://juliandance.org/wp-content/uploads/2016/01/RedApple.jpg'
+        },
+        methods: {
+            randomNumber() {
+                return Math.random();
+            },
+            updateName(event) {
+                this.name = event.target.value;
+            }
+        }
+    });
+</script>
+</body>
+</html>
