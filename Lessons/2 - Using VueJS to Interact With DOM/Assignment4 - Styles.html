@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment 4 - Styles</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        #effect {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+        }
+
+        .highlight {
+            background-color: red;
+            width: 200px !important;
+        }
+
+        .shrink {
+            background-color: gray;
+            width: 50px !important;
+        }
+
+        .big-text {
+            font-family: sans-serif;
+            font-size: 20px;
+        }
+
+        .bold-text {
+            font-weight: bold;
+        }
+
+        .viola {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="exercise">
+        <!-- 1) Start the effect with the button. The effect should alternate the highlight or shrink classes on each new interval tick.
+                Attach the class to the "effect" div below -->
+        <button @click="startEffect">Start Effect</button>
+        <div id="effect" :class="effectClasses"></div>
+
+        <!-- 2) Create a couple of CSS classes and attach them via the array syntax -->
+        <div :class="[class1, class2]">I got no class :(</div>
+
+        <!-- 3) Let the user enter a class (create some example classes) and attach it -->
+        <div>
+            <input type="text" v-model="userClass" />
+            <div :class="userClass"></div>
+        </div>
+
+        <!-- 4) Let the user enter a class and enter true/ false for another class (create some example classes) and attach the classes -->
+        <div>
+            <input type="text" v-model="task4class" />
+            <input type="checkbox" v-model="task4boolean" />
+            <div :class="[task4class, {'bold-text': task4boolean}]">
+                <p>Hello World</p>
+            </div>
+        </div>
+        <!-- 5) Repeat 3) but now with values for styles (instead of class names). Attach the respective styles.  -->
+        <div>
+            <input type="number" v-model="task5size" />
+            <div :style="{'font-size': task5size + 'px'}">
+                <p>Hello Universe</p>
+            </div>
+        </div>
+
+        <!-- 6) Create a simple progress bar with setInterval and style bindings. Start it by hitting the below button. -->
+        <div>
+            <button @click="startProgress">Start Progress</button>
+            <div :style="progressStyles"></div>
+        </div>
+    </div>
+<script>
+    new Vue({
+        el: '#exercise',
+        data: {
+            effectOn: false,
+            class1: 'big-text',
+            class2: 'bold-text',
+            userClass: 'viola',
+            task4class: 'viola',
+            task4boolean: false,
+            task5size: 10,
+            progress: 0
+        },
+        methods: {
+            startEffect() {
+                setInterval(() => this.effectOn = !this.effectOn, 1000);
+            },
+            startProgress() {
+                setInterval(() => this.progress += 5, 500);
+            }
+        },
+        computed: {
+            effectClasses() {
+                return {
+                    highlight: !this.effectOn,
+                    shrink: this.effectOn
+                }
+            },
+            progressStyles() {
+                return {
+                    'background-color': 'blue',
+                    width: (this.progress * 3) + 'px',
+                    height: '20px'
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
