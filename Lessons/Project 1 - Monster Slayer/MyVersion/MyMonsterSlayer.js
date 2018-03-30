@@ -19,8 +19,7 @@
        const actionChoice = Math.floor(Math.random() * 3);
        if (actionChoice === 0) {
            const damage = attackDamage();
-           vue.youHealth -= damage;
-           // vue.actions.push(`MONSTER ATTACKS PLAYER FOR ${damage}`);
+           vue.playerHealth -= damage;
            vue.actions.push({
                actor: ACTORS.monster,
                receiver: ACTORS.player,
@@ -30,8 +29,7 @@
        }
        else if (actionChoice === 1) {
           const damage = specialAttackDamage();
-          vue.youHealth -= damage;
-          // vue.actions.push(`MONSTER SPECIAL ATTACKS PLAYER FOR ${damage}`);
+          vue.playerHealth -= damage;
            vue.actions.push({
                actor: ACTORS.monster,
                receiver: ACTORS.player,
@@ -42,20 +40,65 @@
        else {
           const health = healing();
           vue.monsterHealth += health;
-          // vue.actions.push(`MONSTER HEALS FOR ${health}`);
            vue.actions.push({
                actor: ACTORS.monster,
                receiver: ACTORS.self,
                action: ACTIONS.heals,
                amount: health
-           })
+           });
        }
    };
+
+    const isThereAWinner = (vue) => {
+        let playerLost = false;
+        let monsterLost = false;
+
+        if (vue.playerHealth <= 0) {
+           vue.playerHealth = 0;
+           playerLost = true;
+        }
+
+        if (vue.monsterHealth <= 0) {
+           vue.monsterHealth = 0;
+           monsterLost = true;
+        }
+
+        if (playerLost && monsterLost) {
+           alert('Player and Monster both loose!');
+           vue.gameStarted = false;
+           return false;
+        }
+        else if (playerLost) {
+            alert('Monster wins!');
+            vue.gameStarted = false;
+            return false;
+        }
+        else if (monsterLost) {
+           alert('Player wins!');
+            vue.gameStarted = false;
+           return false;
+        }
+        else {
+           return true;
+        }
+    };
+
+    const getColor = (health) => {
+        if (health >= 70) {
+           return 'green';
+        }
+        else if (health >= 40) {
+           return 'orange';
+        }
+        else {
+           return 'red';
+        }
+    };
 
     return new Vue({
         el: '#app',
         data: {
-            youHealth: 100,
+            playerHealth: 100,
             monsterHealth: 100,
             gameStarted: false,
             actions: []
@@ -63,45 +106,51 @@
         methods: {
             startGame() {
                 this.gameStarted = true;
+                this.playerHealth = 100;
+                this.monsterHealth = 100;
+                this.actions = [];
             },
             attack() {
-               monsterAction(this);
                const damage = attackDamage();
                this.monsterHealth -= damage;
-               // this.actions.push(`PLAYER ATTACKS MONSTER FOR ${damage}`);
                this.actions.push({
                     actor: ACTORS.player,
                     receiver: ACTORS.monster,
                     action: ACTIONS.attacks,
                     amount: damage
-                })
+                });
+               if (isThereAWinner(this)) {
+                   monsterAction(this);
+               }
             },
             specialAttack() {
-               monsterAction(this);
                const damage = specialAttackDamage();
                this.monsterHealth -= damage;
-               // this.actions.push(`PLAYER SPECIAL ATTACKS MONSTER FOR ${damage}`);
                this.actions.push({
                     actor: ACTORS.player,
                     receiver: ACTORS.monster,
                     action: ACTIONS.specialAttacks,
                     amount: damage
-                })
+                });
+               if (isThereAWinner(this)) {
+                   monsterAction(this);
+               }
             },
             heal() {
-               monsterAction(this);
                const health = healing();
-               this.youHealth += health;
-               // this.actions.push(`PLAYER HEALS FOR ${health}`);
+               this.playerHealth += health;
                this.actions.push({
                    actor: ACTORS.player,
                    receiver: ACTORS.self,
                    action: ACTIONS.heals,
                    amount: health
-               })
+               });
+               if (isThereAWinner(this)) {
+                   monsterAction(this);
+               }
             },
             giveUp() {
-                this.youHealth = 100;
+                this.playerHealth = 100;
                 this.monsterHealth = 100;
                 this.actions = [];
                 this.gameStarted = false;
@@ -113,6 +162,20 @@
                else {
                   return 'monster-action';
                }
+            }
+        },
+        computed: {
+           playerProgress() {
+               return {
+                  width: (this.playerHealth * 3) + 'px',
+                  'background-color': getColor(this.playerHealth)
+               }
+           },
+            monsterProgress() {
+                return {
+                   width: (this.monsterHealth * 3) + 'px',
+                    'background-color': getColor(this.monsterHealth)
+                }
             }
         }
     });

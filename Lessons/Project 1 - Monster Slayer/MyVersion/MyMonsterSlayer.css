@@ -47,7 +47,6 @@
 }
 
 .progress-bar {
-    background-color: green; /* TODO make the color dynamic based on health */
     height: 30px;
     color: white;
 }
@@ -57,6 +56,7 @@
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+    background-color: lightgray;
 }
 
 .action {
