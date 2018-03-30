@@ -20,4 +20,55 @@
     margin-top: 50px;
     text-align: center;
     box-shadow: 1px 2px lightgray;
+    padding: 20px;
+}
+
+#startBtn {
+    background-color: aquamarine;
+}
+
+#attackBtn {
+    background-color: coral;
+}
+
+#specialAttackBtn {
+    background-color: orange;
+}
+
+#healBtn {
+    background-color: aquamarine;
+}
+
+.btn {
+    box-shadow: 1px 2px lightgray;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.progress-bar {
+    background-color: green; /* TODO make the color dynamic based on health */
+    height: 30px;
+    color: white;
+}
+
+.progress-bar-wrapper {
+    width: 300px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.action {
+    font-weight: bold;
+}
+
+.player-action {
+    background-color: lightblue;
+    color: blue;
+}
+
+.monster-action {
+    background-color: pink;
+    color: red;
 }

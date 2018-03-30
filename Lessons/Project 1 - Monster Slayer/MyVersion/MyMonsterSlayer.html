@@ -11,20 +11,32 @@
         <div id="topRow">
             <div>
                 <h1>YOU</h1>
-                <div></div> <!-- TODO progress bar -->
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar">{{ youHealth }}</div>
+                </div>
             </div>
             <div>
                 <h1>MONSTER</h1>
-                <div></div> <!-- TODO progress bar -->
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar">{{ monsterHealth }}</div>
+                </div>
             </div>
         </div>
         <div id="controlDiv" class="shadow-box">
-            <!-- TODO controls -->
-            <p>Controls Go Here</p>
+            <template v-if="!gameStarted">
+                <button id="startBtn" class="btn" @click="startGame">START NEW GAME</button>
+            </template>
+            <template v-if="gameStarted">
+                <button id="attackBtn" class="btn" @click="attack">ATTACK</button>
+                <button id="specialAttackBtn" class="btn" @click="specialAttack">SPECIAL ATTACK</button>
+                <button id="healBtn" class="btn" @click="heal">HEAL</button>
+                <button id="giveUpBtn" class="btn" @click="giveUp">GIVE UP</button>
+            </template>
         </div>
         <div id="recordDiv" class="shadow-box">
-            <!-- TODO records -->
-            <p>Records Go Here</p>
+            <p v-for="action in actions" class="action" :class="getActionClass(action)">
+                {{ action.actor + ' ' + action.action + ' ' + action.receiver + ' FOR ' + action.amount }}
+            </p>
         </div>
     </div>
     <script src="MyMonsterSlayer.js"></script>
