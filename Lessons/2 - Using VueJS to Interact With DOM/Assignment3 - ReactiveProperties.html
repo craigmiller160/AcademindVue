@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment 3 - Reactive Properties</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="exercise">
+        <!-- 1) Show a result of not there yet as long as value is not equal to 37 - you can change value with the buttons. Print done once it is there -->
+        <div>
+            <p>Current value: {{ value }}</p>
+            <button @click="value += 5">Add 5</button>
+            <button @click="value += 1">Add 1</button>
+            <p>{{ result }}</p>
+        </div>
+
+        <!-- 2) Watch for changes in the result, and reset it after 5 seconds. Optionally let the user set the timeout with the input -->
+        <div>
+            <input type="number" v-model="waitToReset" />
+            <p>{{ value }}</p>
+        </div>
+    </div>
+<script>
+    new Vue({
+        el: '#exercise',
+        data: {
+            value: 0,
+            waitToReset: 5000
+        },
+        computed: {
+            result() {
+                if (this.value < 37) {
+                    return 'Not there yet';
+                }
+                else if (this.value === 37) {
+                    return 'Done';
+                }
+                else {
+                    return 'Too far';
+                }
+            }
+        },
+        watch: {
+            value(value) {
+                setTimeout(() => this.value = 0, this.waitToReset);
+            }
+        }
+    })
+</script>
+</body>
+</html>
