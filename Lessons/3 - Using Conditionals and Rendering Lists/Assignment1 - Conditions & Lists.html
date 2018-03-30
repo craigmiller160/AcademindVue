@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment 1 - Conditionals & Lists</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="exercise">
+        <!-- 1) Hook up the button to toggle the display of the two paragraphs. Use both v-if and v-show and inspect the elements to see the difference -->
+        <div>
+            <button @click="toggleShow">Toggle</button>
+            <p v-if="show">You either see me 1...</p>
+            <p v-else>...or me 1</p>
+            <p v-show="show">You either see me 2...</p>
+            <p v-show="!show">...or me 2</p>
+        </div>
+        <hr />
+        <!-- 2) Output an <ul> of array elements of your choice. Also print the index of each element. -->
+        <ul>
+            <li v-for="(name, index) in array">{{ name }} - {{ index }}</li>
+        </ul>
+        <hr />
+        <!-- 3) Print all key-value pairs of the following object: {title: 'Lord of the Rings', author: 'J.R.R. Tolkiens', books: '3'}. Also print the index of each item. -->
+        <ul>
+            <li v-for="(value, key) in myObject">{{ key }} - {{ value }}</li>
+        </ul>
+        <hr />
+        <!-- 4) Print the following object (only the values) and also create a nested loop for the array: {name: 'TESTOBJECT', data: [1.67, 1.33, 0.98, 2.21]} (hint: use v-for and v-if to achieve this) -->
+        <ul>
+            <li v-for="(value, key) in testData">
+                <template v-if="isArray(value)">
+                    <span v-for="num in value">{{ num }} </span>
+                </template>
+                <template v-else>
+                    <span>{{ key }} - {{ value }}</span>
+                </template>
+            </li>
+        </ul>
+    </div>
+<script>
+    new Vue({
+        el: '#exercise',
+        data: {
+            show: true,
+            array: ['Max', 'Anna', 'Chris', 'Manu'],
+            myObject: {
+                title: 'Lord of the Rings',
+                author: 'J.R.R. Tolkiens',
+                books: '3'
+            },
+            testData: {
+                name: 'TESTOBJECT',
+                id: 10,
+                data: [1.67, 1.33, 0.98, 2.21]
+            }
+        },
+        methods: {
+            toggleShow() {
+                this.show = !this.show;
+            },
+            isArray(item) {
+                return Array.isArray(item);
+            }
+        }
+    })
+</script>
+</body>
+</html>
