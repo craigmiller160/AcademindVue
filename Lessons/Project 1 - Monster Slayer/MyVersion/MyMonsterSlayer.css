@@ -1,0 +1,23 @@
+
+#app {
+    margin: 50px;
+}
+
+#topRow {
+    white-space: nowrap;
+}
+
+#topRow > div {
+    display: inline-block;
+    width: 50%;
+    margin: 0;
+    white-space: normal;
+    text-align: center;
+}
+
+.shadow-box {
+    border: 1px solid lightgray;
+    margin-top: 50px;
+    text-align: center;
+    box-shadow: 1px 2px lightgray;
+}

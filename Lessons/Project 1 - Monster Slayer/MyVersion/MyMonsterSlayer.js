@@ -1,6 +1,7 @@
 new Vue({
    el: '#app',
    data: {
-      first: 'Hello World'
+       youHealth: 100,
+       monsterHealth: 100
    }
 });

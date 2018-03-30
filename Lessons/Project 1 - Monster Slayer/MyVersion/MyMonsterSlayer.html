@@ -5,19 +5,28 @@
     <title>Monster Slayer</title>
     <link href="MyMonsterSlayer.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-    <script src="MyMonsterSlayer.js"></script>
 </head>
 <body>
     <div id="app">
-        <p>{{ first }}</p>
-        <div>
+        <div id="topRow">
             <div>
-
+                <h1>YOU</h1>
+                <div></div> <!-- TODO progress bar -->
             </div>
             <div>
-
+                <h1>MONSTER</h1>
+                <div></div> <!-- TODO progress bar -->
             </div>
         </div>
+        <div id="controlDiv" class="shadow-box">
+            <!-- TODO controls -->
+            <p>Controls Go Here</p>
+        </div>
+        <div id="recordDiv" class="shadow-box">
+            <!-- TODO records -->
+            <p>Records Go Here</p>
+        </div>
     </div>
+    <script src="MyMonsterSlayer.js"></script>
 </body>
 </html>
