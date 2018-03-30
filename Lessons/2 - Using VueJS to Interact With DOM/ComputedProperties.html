@@ -31,6 +31,12 @@
                 console.log('output');
                 return this.counter > 5 ? 'Greater than 5' : 'Less than 5';
             }
+        },
+        watch: {
+            counter(value) {
+                console.log('Watching');
+                setTimeout(() => this.counter = 0, 2000);
+            }
         }
     });
 </script>
