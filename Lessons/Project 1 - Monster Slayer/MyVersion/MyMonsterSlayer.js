@@ -150,10 +150,8 @@
                }
             },
             giveUp() {
-                this.playerHealth = 100;
-                this.monsterHealth = 100;
-                this.actions = [];
                 this.gameStarted = false;
+                alert('Monster wins!');
             },
             getActionClass(action) {
                if (action.actor === ACTORS.player) {
