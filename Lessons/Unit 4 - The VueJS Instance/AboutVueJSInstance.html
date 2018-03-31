@@ -6,18 +6,24 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 </head>
 <body>
-    <div id="app">
+    <div id="app1">
         <h1>{{ title }}</h1>
         <button @click="show">Show Paragraph</button>
         <p v-if="showParagraph">This is not always visible</p>
     </div>
+    <div id="app2">
+        <h1>{{ title }}</h1>
+        <button @click="onChange">Change something in Vue 1</button>
+    </div>
 <script>
-    new Vue({
-        el: '#app',
-        data: {
-            title: 'The VueJS Instance',
-            showParagraph: false
-        },
+    const data = {
+        title: 'The VueJS Instance',
+        showParagraph: false
+    };
+
+    const vm1 = new Vue({
+        el: '#app1',
+        data: data,
         methods: {
             show() {
                 this.showParagraph = true;
@@ -35,6 +41,25 @@
         watch: {
             title(value) {
                 alert(`Title was changed, new value: ${value}`);
+            }
+        }
+    });
+
+    console.log(vm1.$data === data);
+
+    setTimeout(() => {
+        vm1.title = 'Changed by timer';
+        vm1.show();
+    }, 3000);
+
+    const vm2 = new Vue({
+        el: '#app2',
+        data: {
+            title: 'The Second VueJS Instance'
+        },
+        methods: {
+            onChange() {
+                vm1.title = 'Changed!';
             }
         }
     });
