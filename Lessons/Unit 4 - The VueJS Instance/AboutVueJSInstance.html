@@ -7,13 +7,19 @@
 </head>
 <body>
     <div id="app1">
-        <h1>{{ title }}</h1>
-        <button @click="show">Show Paragraph</button>
+        <h1 ref="heading">{{ title }}</h1>
+        <button @click="show" ref="myButton">Show Paragraph</button>
         <p v-if="showParagraph">This is not always visible</p>
     </div>
     <div id="app2">
         <h1>{{ title }}</h1>
         <button @click="onChange">Change something in Vue 1</button>
+        <hello></hello>
+        <hello></hello>
+    </div>
+
+    <div id="app3">
+
     </div>
 <script>
     const data = {
@@ -21,13 +27,17 @@
         showParagraph: false
     };
 
+    Vue.component('hello', {
+        template: '<h1>Hello Component</h1>'
+    });
+
     const vm1 = new Vue({
-        el: '#app1',
         data: data,
         methods: {
             show() {
                 this.showParagraph = true;
                 this.updateTitle('The VueJS Instance (Updated)');
+                this.$refs['myButton'].innerText = 'Test';
             },
             updateTitle(title) {
                 this.title = title;
@@ -45,7 +55,10 @@
         }
     });
 
+    vm1.$mount('#app1');
+
     console.log(vm1.$data === data);
+    vm1.$refs['heading'].innerText = 'Something else';
 
     setTimeout(() => {
         vm1.title = 'Changed by timer';
@@ -63,6 +76,15 @@
             }
         }
     });
+
+    const vm3 = new Vue({
+        template: '<h1>Hello</h1>'
+    });
+
+    vm3.$mount();
+    document.getElementById('app3').appendChild(vm3.$el);
+
+
 </script>
 </body>
 </html>
