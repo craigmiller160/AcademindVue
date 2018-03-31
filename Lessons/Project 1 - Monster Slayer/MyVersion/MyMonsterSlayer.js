@@ -11,8 +11,8 @@
       heals: 'HEALS'
    };
 
-   const attackDamage = () => Math.floor(Math.random() * 10);
-   const specialAttackDamage = () => Math.floor(Math.random() * 10) + 5;
+   const attackDamage = () => Math.floor(Math.random() * 10) + 1;
+   const specialAttackDamage = () => Math.max(Math.floor(Math.random() * 15) + 1, 5);
    const healing = () => Math.floor(Math.random() * 10);
 
    const monsterAction = (vue) => {
@@ -121,6 +121,7 @@
                 });
                if (isThereAWinner(this)) {
                    monsterAction(this);
+                   isThereAWinner(this);
                }
             },
             specialAttack() {
@@ -134,6 +135,7 @@
                 });
                if (isThereAWinner(this)) {
                    monsterAction(this);
+                   isThereAWinner(this);
                }
             },
             heal() {
@@ -147,6 +149,7 @@
                });
                if (isThereAWinner(this)) {
                    monsterAction(this);
+                   isThereAWinner(this);
                }
             },
             giveUp() {
