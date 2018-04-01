@@ -14,6 +14,10 @@
         type: String,
         required: true
         //default: ''
+      },
+      resetFn: {
+        type: Function,
+        required: true
       }
     },
     methods: {
@@ -21,8 +25,9 @@
         return this.myName.split('').reverse().join('');
       },
       resetName() {
-        this.myName = 'Max';
-        this.$emit('nameWasReset', this.myName);
+        // this.myName = 'Max';
+        // this.$emit('nameWasReset', this.myName);
+        this.resetFn();
       }
     }
   }
