@@ -44,7 +44,7 @@
 </script>
 
 <style scoped>
-    div {
-        background-color: lightblue;
-    }
+  div {
+    background-color: lightblue;
+  }
 </style>
