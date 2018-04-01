@@ -9,6 +9,8 @@
 </template>
 
 <script>
+  import { eventBus } from '../main';
+
   export default {
     props: {
       myName: {
@@ -34,6 +36,9 @@
         // this.$emit('nameWasReset', this.myName);
         this.resetFn();
       }
+    },
+    created() {
+      eventBus.$on('ageWasEdited', age => this.userAge = age); //TODO how to handle changing the value of a prop... does the parent always need to be the one that is changed???
     }
   }
 </script>
