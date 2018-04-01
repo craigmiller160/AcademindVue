@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import ServersHome from './ServersHome';
+  import ServersHome from './components/servers/ServersHome';
 
   export default {
     components: {
