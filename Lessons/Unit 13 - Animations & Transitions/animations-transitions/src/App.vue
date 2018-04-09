@@ -5,8 +5,8 @@
                 <h1>Animations</h1>
                 <hr />
                 <select v-model="alertAnimation" class="form-control">
-                    <option>Fade</option>
-                    <option>Slide</option>
+                    <option value="fade">Fade</option>
+                    <option value="slide">Slide</option>
                 </select>
                 <br/>
                 <button class="btn btn-primary" @click="show = !show">Show Alert</button>
@@ -20,6 +20,12 @@
                 <transition enter-class="" enter-active-class="animated bounceIn" leave-class="" leave-active-class="animated bounceOut" appear>
                     <div class="alert alert-info" v-if="show">This is some info</div>
                 </transition>
+                <hr />
+                <!-- The thing below is transitioning between two elements -->
+                <transition :name="alertAnimation" mode="out-in">
+                    <div class="alert alert-info" v-if="show" key="info">This is some info</div>
+                    <div class="alert alert-warning" v-else key="warning">This is some warning</div>
+                </transition>
             </div>
         </div>
     </div>
@@ -30,7 +36,7 @@ export default {
     data() {
         return {
             show: true,
-            alertAnimation: 'Fade'
+            alertAnimation: 'fade'
         }
     }
 }
