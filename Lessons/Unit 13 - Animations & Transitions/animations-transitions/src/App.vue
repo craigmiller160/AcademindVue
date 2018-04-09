@@ -26,6 +26,14 @@
                     <div class="alert alert-info" v-if="show" key="info">This is some info</div>
                     <div class="alert alert-warning" v-else key="warning">This is some warning</div>
                 </transition>
+                <hr />
+                <!-- This is where JavaScript animations go -->
+                <button class="btn btn-primary" @click="load = !load">Load / Remove Element</button>
+                <br /><br />
+                <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter" @enter-cancelled="enterCancelled"
+                            @before-leave="beforeLeave" @leave="leave" @after-leave="afterLeave" @leave-cancelled="leaveCancelled">
+                    <div style="width: 100px; height: 100px; background-color: lightgreen;" v-if="load"></div>
+                </transition>
             </div>
         </div>
     </div>
@@ -35,8 +43,37 @@
 export default {
     data() {
         return {
-            show: true,
+            show: false,
+            load: true,
             alertAnimation: 'fade'
+        }
+    },
+    methods: {
+        beforeEnter(element) {
+            console.log('Before Enter');
+        },
+        enter(element, doneFn) {
+            console.log('Enter');
+            doneFn(); //Needed to tell VueJS when the animation finishes
+        },
+        afterEnter(element) {
+            console.log('After Enter');
+        },
+        enterCancelled(element) {
+            console.log('Enter Cancelled')
+        },
+        beforeLeave(element) {
+            console.log('Before Leave');
+        },
+        leave(element, doneFn) {
+            console.log('Leave');
+            doneFn();
+        },
+        afterLeave(element) {
+            console.log('After Leave')
+        },
+        leaveCancelled(element) {
+            console.log('Leave Cancelled');
         }
     }
 }
