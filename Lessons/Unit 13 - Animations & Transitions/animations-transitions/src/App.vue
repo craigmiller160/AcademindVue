@@ -32,7 +32,7 @@
                 <br /><br />
                 <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter" @enter-cancelled="enterCancelled"
                             @before-leave="beforeLeave" @leave="leave" @after-leave="afterLeave" @leave-cancelled="leaveCancelled">
-                    <div style="width: 100px; height: 100px; background-color: lightgreen;" v-if="load"></div>
+                    <div style="width: 300px; height: 100px; background-color: lightgreen;" v-if="load"></div>
                 </transition>
             </div>
         </div>
@@ -45,16 +45,27 @@ export default {
         return {
             show: false,
             load: true,
-            alertAnimation: 'fade'
+            alertAnimation: 'fade',
+            elementWidth: 100
         }
     },
     methods: {
         beforeEnter(element) {
             console.log('Before Enter');
+            this.elementWidth = 100;
+            element.style.width = `${this.elementWidth}px`;
         },
         enter(element, doneFn) {
             console.log('Enter');
-            doneFn(); //Needed to tell VueJS when the animation finishes
+            let round = 1;
+            const interval = setInterval(() => {
+                element.style.width = `${this.elementWidth + round * 10}px`;
+                round++;
+                if (round > 20) {
+                    clearInterval(interval);
+                    doneFn(); //Needed to tell VueJS when the animation finishes
+                }
+            }, 20);
         },
         afterEnter(element) {
             console.log('After Enter');
@@ -64,10 +75,20 @@ export default {
         },
         beforeLeave(element) {
             console.log('Before Leave');
+            this.elementWidth = 300;
+            element.style.width = `${this.elementWidth}px`;
         },
         leave(element, doneFn) {
             console.log('Leave');
-            doneFn();
+            let round = 1;
+            const interval = setInterval(() => {
+                element.style.width = `${this.elementWidth - round * 10}px`;
+                round++;
+                if (round > 20) {
+                    clearInterval(interval);
+                    doneFn(); //Needed to tell VueJS when the animation finishes
+                }
+            }, 20);
         },
         afterLeave(element) {
             console.log('After Leave')
