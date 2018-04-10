@@ -34,70 +34,92 @@
                             @before-leave="beforeLeave" @leave="leave" @after-leave="afterLeave" @leave-cancelled="leaveCancelled" :css="false">
                     <div style="width: 300px; height: 100px; background-color: lightgreen;" v-if="load"></div>
                 </transition>
+                <hr />
+                <button class="btn btn-primary" @click="toggleComponent">Toggle Components</button>
+                <br /><br />
+                <transition name="fade" mode="out-in">
+                    <component :is="selectedComponent"></component>
+                </transition>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-            show: false,
-            load: true,
-            alertAnimation: 'fade',
-            elementWidth: 100
-        }
-    },
-    methods: {
-        beforeEnter(element) {
-            console.log('Before Enter');
-            this.elementWidth = 100;
-            element.style.width = `${this.elementWidth}px`;
+    import DangerAlert from './DangerAlert';
+    import SuccessAlert from './SuccessAlert';
+
+    export default {
+        data() {
+            return {
+                show: false,
+                load: true,
+                alertAnimation: 'fade',
+                elementWidth: 100,
+                selectedComponent: 'app-success-alert'
+            }
         },
-        enter(element, doneFn) {
-            console.log('Enter');
-            let round = 1;
-            const interval = setInterval(() => {
-                element.style.width = `${this.elementWidth + round * 10}px`;
-                round++;
-                if (round > 20) {
-                    clearInterval(interval);
-                    doneFn(); //Needed to tell VueJS when the animation finishes
+        components: {
+            appDangerAlert: DangerAlert,
+            appSuccessAlert: SuccessAlert
+        },
+        methods: {
+            beforeEnter(element) {
+                console.log('Before Enter');
+                this.elementWidth = 100;
+                element.style.width = `${this.elementWidth}px`;
+            },
+            enter(element, doneFn) {
+                console.log('Enter');
+                let round = 1;
+                const interval = setInterval(() => {
+                    element.style.width = `${this.elementWidth + round * 10}px`;
+                    round++;
+                    if (round > 20) {
+                        clearInterval(interval);
+                        doneFn(); //Needed to tell VueJS when the animation finishes
+                    }
+                }, 20);
+            },
+            afterEnter(element) {
+                console.log('After Enter');
+            },
+            enterCancelled(element) {
+                console.log('Enter Cancelled')
+            },
+            beforeLeave(element) {
+                console.log('Before Leave');
+                this.elementWidth = 300;
+                element.style.width = `${this.elementWidth}px`;
+            },
+            leave(element, doneFn) {
+                console.log('Leave');
+                let round = 1;
+                const interval = setInterval(() => {
+                    element.style.width = `${this.elementWidth - round * 10}px`;
+                    round++;
+                    if (round > 20) {
+                        clearInterval(interval);
+                        doneFn(); //Needed to tell VueJS when the animation finishes
+                    }
+                }, 20);
+            },
+            afterLeave(element) {
+                console.log('After Leave')
+            },
+            leaveCancelled(element) {
+                console.log('Leave Cancelled');
+            },
+            toggleComponent() {
+                if (this.selectedComponent === 'app-success-alert') {
+                    this.selectedComponent = 'app-danger-alert';
                 }
-            }, 20);
-        },
-        afterEnter(element) {
-            console.log('After Enter');
-        },
-        enterCancelled(element) {
-            console.log('Enter Cancelled')
-        },
-        beforeLeave(element) {
-            console.log('Before Leave');
-            this.elementWidth = 300;
-            element.style.width = `${this.elementWidth}px`;
-        },
-        leave(element, doneFn) {
-            console.log('Leave');
-            let round = 1;
-            const interval = setInterval(() => {
-                element.style.width = `${this.elementWidth - round * 10}px`;
-                round++;
-                if (round > 20) {
-                    clearInterval(interval);
-                    doneFn(); //Needed to tell VueJS when the animation finishes
+                else {
+                    this.selectedComponent = 'app-success-alert';
                 }
-            }, 20);
-        },
-        afterLeave(element) {
-            console.log('After Leave')
-        },
-        leaveCancelled(element) {
-            console.log('Leave Cancelled');
+            }
         }
     }
-}
 </script>
 
 <style scoped>
