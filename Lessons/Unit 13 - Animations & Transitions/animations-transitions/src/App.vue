@@ -31,7 +31,7 @@
                 <button class="btn btn-primary" @click="load = !load">Load / Remove Element</button>
                 <br /><br />
                 <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter" @enter-cancelled="enterCancelled"
-                            @before-leave="beforeLeave" @leave="leave" @after-leave="afterLeave" @leave-cancelled="leaveCancelled">
+                            @before-leave="beforeLeave" @leave="leave" @after-leave="afterLeave" @leave-cancelled="leaveCancelled" :css="false">
                     <div style="width: 300px; height: 100px; background-color: lightgreen;" v-if="load"></div>
                 </transition>
             </div>
