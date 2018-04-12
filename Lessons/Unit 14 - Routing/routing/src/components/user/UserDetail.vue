@@ -22,6 +22,11 @@
                     hash: '#data'
                 }
             }
+        },
+        beforeRouteEnter(to, from, next) {
+            //Vue instance features are not available in this function
+            console.log('Inside component');
+            next(); //As long as next() is not called, the component is not called.
         }
     }
 </script>
