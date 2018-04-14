@@ -1,4 +1,4 @@
-# vuex
+# vuex-lesson
 
 > A Vue.js project
 

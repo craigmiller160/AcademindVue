@@ -1,5 +1,5 @@
 {
-  "name": "vuex",
+  "name": "vuex-lesson",
   "description": "A Vue.js project",
   "version": "1.0.0",
   "author": "Craig Miller <craigmiller160@gmail.com>",
@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "vue": "^2.5.11"
+    "vue": "^2.5.11",
+    "vuex": "^3.0.1"
   },
   "browserslist": [
     "> 1%",
