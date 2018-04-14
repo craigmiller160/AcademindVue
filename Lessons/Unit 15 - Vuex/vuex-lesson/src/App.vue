@@ -5,9 +5,13 @@
                 <h1>Vuex</h1>
                 <app-result></app-result>
                 <app-another-result></app-another-result>
-                <hr>
+                <hr />
                 <app-counter></app-counter>
                 <app-another-counter></app-another-counter>
+                <hr />
+                <label for="value">Value</label>
+                <input id="value" type="number" class="form-control" v-model="value" />
+                <p>{{ value }}</p>
             </div>
         </div>
     </div>
@@ -25,6 +29,16 @@
             appResult: Result,
             appAnotherResult: AnotherResult,
             appAnotherCounter: AnotherCounter
+        },
+        computed: {
+            value: {
+                get() {
+                    return this.$store.getters.value;
+                },
+                set(value) {
+                    return this.$store.dispatch('updateValue', value);
+                }
+            }
         }
     }
 </script>
