@@ -1,7 +1,7 @@
-export const updateValue = (context, payload) => {
-    context.commit('updateValue', payload);
-};
+import * as types from './types';
 
-export const action2 = context => {
-    console.log('Action 2');
-};
+export default {
+    [types.UPDATE_VALUE]: (context, payload) => {
+        context.commit(types.MUTATE_UPDATE_VALUE, payload);
+    }
+}

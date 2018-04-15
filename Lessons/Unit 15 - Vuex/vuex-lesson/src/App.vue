@@ -22,6 +22,7 @@
     import Result from './components/Result';
     import AnotherResult from './components/AnotherResult';
     import AnotherCounter from './components/AnotherCounter';
+    import * as types from './store/types';
 
     export default {
         components: {
@@ -33,10 +34,10 @@
         computed: {
             value: {
                 get() {
-                    return this.$store.getters.value;
+                    return this.$store.getters[types.VALUE];
                 },
                 set(value) {
-                    return this.$store.dispatch('updateValue', value);
+                    return this.$store.dispatch(types.UPDATE_VALUE, value);
                 }
             }
         }
