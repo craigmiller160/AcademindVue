@@ -21,6 +21,8 @@
 </template>
 
 <script>
+    import { StockOrder } from '../../model/StockOrder';
+
     export default {
         props: [
             'stock'
@@ -32,11 +34,7 @@
         },
         methods: {
             buyStock() {
-                const order = {
-                    stockId: this.stock.id,
-                    stockPrice: this.stock.price,
-                    quantity: this.quantity
-                };
+                const order = new StockOrder(this.stock.id, this.stock.price, this.quantity);
                 console.log(order);
                 this.quantity = 0;
             }
