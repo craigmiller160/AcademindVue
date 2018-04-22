@@ -24,7 +24,7 @@
 <script>
     import { StockOrder } from '../../model/StockOrder';
     import stocksKeys from '../../store/modules/stocks.keys';
-    import * as portfolioKeys from '../../store/modules/portfolio.keys';
+    import portfolioKeys from '../../store/modules/portfolio.keys';
     import inputSelectMixin from '../../mixins/inputSelect';
     import formatCurrencyMixin from '../../mixins/formatCurrency';
     import { mapGetters } from 'vuex';
@@ -47,7 +47,7 @@
         },
         computed: {
             ...mapGetters({
-                funds: portfolioKeys.GETTER_FUNDS
+                funds: portfolioKeys.ns.GETTER_FUNDS
             }),
             disableBuyBtn() {
                 return this.quantity <= 0 || isNaN(this.quantity) || this.insufficientFunds;

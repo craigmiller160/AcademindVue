@@ -1,3 +1,5 @@
+import { createNamespaceKeys } from './moduleUtil';
+
 const NAMESPACE = 'stocks';
 
 const keys = {
@@ -11,10 +13,7 @@ const keys = {
     GETTER_STOCKS: 'stocks'
 };
 
-const keysNS = {};
-Object.keys(keys).forEach(key => keysNS[key] = `${NAMESPACE}/${keys[key]}`);
-
 export default {
     ...keys,
-    ns: keysNS
+    ns: createNamespaceKeys(keys, NAMESPACE)
 }

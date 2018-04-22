@@ -8,13 +8,13 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    import * as portfolioKeys from '../../store/modules/portfolio.keys';
+    import portfolioKeys from '../../store/modules/portfolio.keys';
     import Stock from './Stock';
 
     export default {
         computed: {
             ...mapGetters({
-                stocks: portfolioKeys.GETTER_STOCK_PORTFOLIO
+                stocks: portfolioKeys.ns.GETTER_STOCK_PORTFOLIO
             })
         },
         components: {

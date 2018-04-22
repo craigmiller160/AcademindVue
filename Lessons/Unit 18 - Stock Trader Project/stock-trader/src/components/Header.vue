@@ -37,14 +37,14 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
-    import * as portfolioKeys from '../store/modules/portfolio.keys';
+    import portfolioKeys from '../store/modules/portfolio.keys';
     import stocksKeys from '../store/modules/stocks.keys';
     import formatCurrency from '../mixins/formatCurrency';
 
     export default {
         computed: {
             ...mapGetters({
-                funds: portfolioKeys.GETTER_FUNDS
+                funds: portfolioKeys.ns.GETTER_FUNDS
             })
         },
         methods: {

@@ -10,13 +10,13 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    import * as portfolioKeys from '../store/modules/portfolio.keys';
+    import portfolioKeys from '../store/modules/portfolio.keys';
     import formatCurrency from '../mixins/formatCurrency';
 
     export default {
         computed: {
             ...mapGetters({
-                funds: portfolioKeys.GETTER_FUNDS
+                funds: portfolioKeys.ns.GETTER_FUNDS
             })
         },
         mixins: [

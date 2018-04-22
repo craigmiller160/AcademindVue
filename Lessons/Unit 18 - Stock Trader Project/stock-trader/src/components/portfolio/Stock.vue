@@ -23,7 +23,7 @@
 
 <script>
     import { StockOrder } from '../../model/StockOrder';
-    import * as portfolioKeys from '../../store/modules/portfolio.keys';
+    import portfolioKeys from '../../store/modules/portfolio.keys';
     import inputSelectMixin from '../../mixins/inputSelect';
     import formatCurrencyMixin from '../../mixins/formatCurrency';
 
@@ -39,7 +39,7 @@
         methods: {
             sellStock() {
                 const order = new StockOrder(this.stock.stockId, this.stock.price, this.quantity);
-                this.$store.dispatch(portfolioKeys.ACTION_SELL_STOCK, order);
+                this.$store.dispatch(portfolioKeys.ns.ACTION_SELL_STOCK, order);
                 this.quantity = 0;
             }
         },
