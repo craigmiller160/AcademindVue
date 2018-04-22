@@ -13,7 +13,7 @@
                         <a>Stocks</a>
                     </router-link>
                 </ul>
-                <strong class="navbar-text navbar-right">Funds: {{ funds | formatCurrency }}</strong>
+                <strong class="navbar-text navbar-right">Funds: {{ funds | formatCurrency }} | Day: {{ day }}</strong>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a style="cursor: pointer;" @click="endDay">End Day</a>
@@ -51,7 +51,8 @@
         },
         computed: {
             ...mapGetters({
-                funds: portfolioKeys.ns.GETTER_FUNDS
+                funds: portfolioKeys.ns.GETTER_FUNDS,
+                day: portfolioKeys.ns.GETTER_DAY
             }),
             dropdownOpen() {
                 return {
@@ -61,10 +62,12 @@
         },
         methods: {
             ...mapActions({
-                randomizeStocks: stocksKeys.ns.ACTION_RANDOMIZE_STOCKS
+                randomizeStocks: stocksKeys.ns.ACTION_RANDOMIZE_STOCKS,
+                nextDay: portfolioKeys.ns.ACTION_NEXT_DAY
             }),
             endDay() {
                 this.randomizeStocks();
+                this.nextDay();
             },
             toggleDropdown() {
                 this.isDropdownOpen = !this.isDropdownOpen;

@@ -1,10 +1,12 @@
 import { PortfolioStock } from '../../model/PortfolioStock';
 import { PortfolioDisplayStock } from '../../model/PortfolioDisplayStock';
 import stocksKeys from './stocks.keys';
+import portfolioKeys from './portfolio.keys';
 
 const state = {
     funds: 10000,
-    stocks: []
+    stocks: [],
+    day: 1
 };
 
 const mutations = {
@@ -28,12 +30,18 @@ const mutations = {
             state.stocks.splice(recordIndex, 1);
         }
         state.funds += (stockOrder.stockPrice * stockOrder.quantity);
+    },
+    nextDay(state) {
+        state.day++;
     }
 };
 
 const actions = {
     sellStock(context, stockOrder) {
-        context.commit('sellStock', stockOrder);
+        context.commit(portfolioKeys.MUTATION_SELL_STOCK, stockOrder);
+    },
+    nextDay(context) {
+        context.commit(portfolioKeys.MUTATION_NEXT_DAY);
     }
 };
 
@@ -46,6 +54,9 @@ const getters = {
     },
     funds(state) {
         return state.funds;
+    },
+    day(state) {
+        return state.day;
     }
 };
 
