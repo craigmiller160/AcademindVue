@@ -3,7 +3,7 @@
         <div class="panel-heading">
             <h3 class="panel-title">
                 {{ stock.name }}
-                <small>(Price: {{ stock.price }} | Quantity: {{ stock.quantity }})</small>
+                <small>(Price: {{ stock.price | formatCurrency }} | Quantity: {{ stock.quantity }})</small>
             </h3>
         </div>
         <div class="panel-body">
@@ -25,6 +25,7 @@
     import { StockOrder } from '../../model/StockOrder';
     import * as portfolioKeys from '../../store/modules/portfolio.keys';
     import inputSelectMixin from '../../mixins/inputSelect';
+    import formatCurrencyMixin from '../../mixins/formatCurrency';
 
     export default {
         props: [
@@ -62,7 +63,8 @@
             }
         },
         mixins: [
-            inputSelectMixin
+            inputSelectMixin,
+            formatCurrencyMixin
         ]
     }
 </script>

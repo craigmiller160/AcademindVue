@@ -16,7 +16,7 @@
                 <strong class="navbar-text navbar-right">Funds: {{ funds | formatCurrency }}</strong>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#">End Day</a>
+                        <a style="cursor: pointer;" @click="endDay">End Day</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Save and Load <span class="caret"></span></a>
@@ -36,8 +36,9 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
+    import { mapGetters, mapActions } from 'vuex';
     import * as portfolioKeys from '../store/modules/portfolio.keys';
+    import * as stocksKeys from '../store/modules/stocks.keys';
     import formatCurrency from '../mixins/formatCurrency';
 
     export default {
@@ -45,6 +46,14 @@
             ...mapGetters({
                 funds: portfolioKeys.GETTER_FUNDS
             })
+        },
+        methods: {
+            ...mapActions({
+                randomizeStocks: stocksKeys.ACTION_RANDOMIZE_STOCKS
+            }),
+            endDay() {
+                this.randomizeStocks();
+            }
         },
         mixins: [
             formatCurrency

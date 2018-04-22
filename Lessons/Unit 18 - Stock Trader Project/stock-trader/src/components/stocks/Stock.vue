@@ -3,7 +3,7 @@
         <div class="panel-heading">
             <h3 class="panel-title">
                 {{ stock.name }}
-                <small>(Price: {{ stock.price }})</small>
+                <small>(Price: {{ stock.price | formatCurrency }})</small>
             </h3>
         </div>
         <div class="panel-body">
@@ -26,6 +26,7 @@
     import * as stocksKeys from '../../store/modules/stocks.keys';
     import * as portfolioKeys from '../../store/modules/portfolio.keys';
     import inputSelectMixin from '../../mixins/inputSelect';
+    import formatCurrencyMixin from '../../mixins/formatCurrency';
     import { mapGetters } from 'vuex';
 
     export default {
@@ -67,7 +68,8 @@
             }
         },
         mixins: [
-            inputSelectMixin
+            inputSelectMixin,
+            formatCurrencyMixin
         ]
     }
 </script>
