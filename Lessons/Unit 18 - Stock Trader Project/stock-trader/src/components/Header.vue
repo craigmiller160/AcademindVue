@@ -18,16 +18,16 @@
                     <li>
                         <a style="cursor: pointer;" @click="endDay">End Day</a>
                     </li>
-                    <li class="dropdown" :class="{open: isDropdownOpen}">
+                    <li class="dropdown" :class="dropdownOpen">
                         <a style="cursor: pointer;" class="dropdown-toggle" data-toggle="dropdown"
                            role="button" aria-haspopup="true" aria-expanded="false"
                            @click="toggleDropdown">Save and Load <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#">Save Data</a>
+                                <a style="cursor: pointer;">Save Data</a>
                             </li>
                             <li>
-                                <a href="#">Load Data</a>
+                                <a style="cursor: pointer;">Load Data</a>
                             </li>
                         </ul>
                     </li>
@@ -52,7 +52,12 @@
         computed: {
             ...mapGetters({
                 funds: portfolioKeys.ns.GETTER_FUNDS
-            })
+            }),
+            dropdownOpen() {
+                return {
+                    open: this.isDropdownOpen
+                }
+            }
         },
         methods: {
             ...mapActions({
