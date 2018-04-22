@@ -9,7 +9,6 @@
             </div>
             <div class="panel-body">
                 <div class="pull-left">
-                    <!--<label for="quantity">Quantity</label>--> <!-- TODO use Bootstrap 4 and align this stuff -->
                     <input id="quantity" type="number" class="form-control" placeholder="quantity" v-model="quantity" @focus="selectInputContents" />
                 </div>
                 <div class="pull-right">
@@ -23,6 +22,7 @@
 <script>
     import { StockOrder } from '../../model/StockOrder';
     import * as portfolioKeys from '../../store/modules/portfolio.keys';
+    import inputSelectMixin from '../../mixins/inputSelect';
 
     export default {
         props: [
@@ -44,7 +44,10 @@
             disableBuyBtn() {
                 return this.quantity <= 0 || isNaN(this.quantity);
             }
-        }
+        },
+        mixins: [
+            inputSelectMixin
+        ]
     }
 </script>
 

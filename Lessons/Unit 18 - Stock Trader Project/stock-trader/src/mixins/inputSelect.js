@@ -1,4 +1,4 @@
-export const inputSelectMixin = {
+export default {
     methods: {
         selectInputContents(event) {
             event.target.select();
