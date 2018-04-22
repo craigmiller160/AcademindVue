@@ -31,12 +31,9 @@
         computed: {
             ...mapGetters({
                 stocks: portfolioKeys.ns.GETTER_STOCK_PORTFOLIO,
-                portfolioNet: portfolioKeys.ns.GETTER_PORTFOLIO_NET
-            }),
-            dailyChange() {
-                //TODO finish this
-                return 0;
-            }
+                portfolioNet: portfolioKeys.ns.GETTER_PORTFOLIO_NET,
+                dailyChange: portfolioKeys.ns.GETTER_DAILY_CHANGE
+            })
         },
         components: {
             appStock: Stock,

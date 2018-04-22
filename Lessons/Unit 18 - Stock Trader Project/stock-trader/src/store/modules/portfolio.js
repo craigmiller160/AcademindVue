@@ -8,7 +8,8 @@ export const STARTING_FUNDS = 10000;
 const state = {
     funds: STARTING_FUNDS,
     stocks: [],
-    day: 1
+    day: 1,
+    priorPortfolioNet: 0
 };
 
 const mutations = {
@@ -35,6 +36,9 @@ const mutations = {
     },
     nextDay(state) {
         state.day++;
+    },
+    setPriorPortfolioNet(state, rootGetters) {
+        state.priorPortfolioNet = rootGetters[portfolioKeys.ns.GETTER_PORTFOLIO_NET];
     }
 };
 
@@ -43,6 +47,7 @@ const actions = {
         context.commit(portfolioKeys.MUTATION_SELL_STOCK, stockOrder);
     },
     nextDay(context) {
+        context.commit(portfolioKeys.MUTATION_SET_PRIOR_PORTFOLIO_NET, context.rootGetters); //TODO figure out a better way
         context.commit(portfolioKeys.MUTATION_NEXT_DAY);
     }
 };
@@ -64,8 +69,13 @@ const getters = {
         let net = 0;
         getters[portfolioKeys.GETTER_STOCK_PORTFOLIO].forEach(stock => net += (stock.price * stock.quantity));
         return net;
+    },
+    priorPortfolioNet(state) {
+        return state.priorPortfolioNet;
+    },
+    dailyChange(state, getters) {
+        return getters.portfolioNet - getters.priorPortfolioNet;
     }
-
 };
 
 export default {

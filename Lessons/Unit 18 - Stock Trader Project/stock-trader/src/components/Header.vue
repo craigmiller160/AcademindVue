@@ -66,8 +66,8 @@
                 nextDay: portfolioKeys.ns.ACTION_NEXT_DAY
             }),
             endDay() {
-                this.randomizeStocks();
                 this.nextDay();
+                this.randomizeStocks();
             },
             toggleDropdown() {
                 this.isDropdownOpen = !this.isDropdownOpen;
