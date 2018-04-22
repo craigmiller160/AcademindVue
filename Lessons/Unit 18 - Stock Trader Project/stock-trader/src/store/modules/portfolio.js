@@ -41,8 +41,6 @@ const getters = {
     stockPortfolio(state, getters, rootState, rootGetters) {
         return state.stocks.map(stock => {
             const record = rootGetters[stocksKeys.GETTER_STOCKS].find(element => element.stockId === stock.stockId); //TODO what if record doesn't exist?
-            console.log(rootGetters[stocksKeys.GETTER_STOCKS]); //TODO delete this
-            console.log(stock); //TODO delete this
             return new PortfolioDisplayStock(stock.stockId, stock.quantity, record.name, record.price);
         });
     },

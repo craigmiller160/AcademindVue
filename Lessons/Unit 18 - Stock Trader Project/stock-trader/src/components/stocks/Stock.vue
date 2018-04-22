@@ -10,7 +10,7 @@
             <div class="panel-body">
                 <div class="pull-left">
                     <!--<label for="quantity">Quantity</label>--> <!-- TODO use Bootstrap 4 and align this stuff -->
-                    <input id="quantity" type="number" class="form-control" placeholder="quantity" v-model="quantity" />
+                    <input id="quantity" type="number" class="form-control" placeholder="quantity" v-model="quantity" @focus="selectInputContents" />
                 </div>
                 <div class="pull-right">
                     <button type="button" class="btn btn-success" @click="buyStock" :disabled="disableBuyBtn">Buy</button>
