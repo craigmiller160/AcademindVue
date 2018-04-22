@@ -22,6 +22,7 @@
 
 <script>
     import { StockOrder } from '../../model/StockOrder';
+    import * as stocksKeys from '../../store/modules/stocks.keys';
 
     export default {
         props: [
@@ -34,8 +35,8 @@
         },
         methods: {
             buyStock() {
-                const order = new StockOrder(this.stock.id, this.stock.price, this.quantity);
-                console.log(order);
+                const order = new StockOrder(this.stock.stockId, this.stock.price, this.quantity);
+                this.$store.dispatch(stocksKeys.ACTION_BUY_STOCK, order);
                 this.quantity = 0;
             }
         },

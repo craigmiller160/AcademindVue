@@ -1,5 +1,6 @@
 import { PortfolioStock } from '../../model/PortfolioStock';
 import { PortfolioDisplayStock } from '../../model/PortfolioDisplayStock';
+import * as stocksKeys from './stocks.keys';
 
 const state = {
     funds: 10000,
@@ -37,9 +38,11 @@ const actions = {
 };
 
 const getters = {
-    stockPortfolio(state, getters) {
+    stockPortfolio(state, getters, rootState, rootGetters) {
         return state.stocks.map(stock => {
-            const record = getters.stocks.find(element => element.stockId === stock.stockId); //TODO what if record doesn't exist?
+            const record = rootGetters[stocksKeys.GETTER_STOCKS].find(element => element.stockId === stock.stockId); //TODO what if record doesn't exist?
+            console.log(rootGetters[stocksKeys.GETTER_STOCKS]); //TODO delete this
+            console.log(stock); //TODO delete this
             return new PortfolioDisplayStock(stock.stockId, stock.quantity, record.name, record.price);
         });
     },

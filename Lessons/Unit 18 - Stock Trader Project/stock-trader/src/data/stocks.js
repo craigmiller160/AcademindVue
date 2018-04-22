@@ -1,22 +1,8 @@
+import { BasicStock } from '../model/BasicStock';
+
 export default [
-    {
-        id: 1,
-        name: 'BMW',
-        price: 110
-    },
-    {
-        id: 2,
-        name: 'Google',
-        price: 200
-    },
-    {
-        id: 3,
-        name: 'Apple',
-        price: 250
-    },
-    {
-        id: 4,
-        name: 'Twitter',
-        price: 8
-    }
+    new BasicStock(1, 'BMW', 110),
+    new BasicStock(2, 'Google', 200),
+    new BasicStock(3, 'Apple', 250),
+    new BasicStock(4, 'Twitter', 8)
 ];

@@ -1,4 +1,5 @@
 import stocks from '../../data/stocks';
+import * as portfolioKeys from './portfolio.keys';
 
 const state = {
     stocks: []
@@ -15,7 +16,7 @@ const mutations = {
 
 const actions = {
     buyStock(context, order) {
-        context.commit(); //TODO finish this
+        context.commit(portfolioKeys.MUTATION_BUY_STOCK, order, {root: true});
     },
     initStocks(context) {
         context.commit('setStocks', stocks);
