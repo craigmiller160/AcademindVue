@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-xs-8 pull-left">
                     <input id="quantity" type="number" class="form-control" placeholder="quantity"
-                           :class="fieldClass" v-model="quantity" @focus="selectInputContents" />
+                           :class="fieldClass" v-model="quantity" @focus="selectInputContents" @focusout="restoreInputDefault($event, 0)" />
                 </div>
                 <div class="col-xs-4 pull-right">
                     <button type="button" class="btn btn-info" @click="sellStock"
