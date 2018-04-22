@@ -3,8 +3,10 @@ import { PortfolioDisplayStock } from '../../model/PortfolioDisplayStock';
 import stocksKeys from './stocks.keys';
 import portfolioKeys from './portfolio.keys';
 
+export const STARTING_FUNDS = 10000;
+
 const state = {
-    funds: 10000,
+    funds: STARTING_FUNDS,
     stocks: [],
     day: 1
 };
@@ -57,7 +59,13 @@ const getters = {
     },
     day(state) {
         return state.day;
+    },
+    portfolioNet(state, getters) {
+        let net = 0;
+        getters[portfolioKeys.GETTER_STOCK_PORTFOLIO].forEach(stock => net += (stock.price * stock.quantity));
+        return net;
     }
+
 };
 
 export default {

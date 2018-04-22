@@ -12,7 +12,8 @@ const keys = {
 
     GETTER_STOCK_PORTFOLIO: 'stockPortfolio',
     GETTER_FUNDS: 'funds',
-    GETTER_DAY: 'day'
+    GETTER_DAY: 'day',
+    GETTER_PORTFOLIO_NET: 'portfolioNet'
 };
 
 export default {
