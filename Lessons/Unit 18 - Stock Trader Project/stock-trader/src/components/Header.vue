@@ -18,8 +18,10 @@
                     <li>
                         <a style="cursor: pointer;" @click="endDay">End Day</a>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Save and Load <span class="caret"></span></a>
+                    <li class="dropdown" :class="{open: isDropdownOpen}">
+                        <a style="cursor: pointer;" class="dropdown-toggle" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false"
+                           @click="toggleDropdown">Save and Load <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="#">Save Data</a>
@@ -42,6 +44,11 @@
     import formatCurrency from '../mixins/formatCurrency';
 
     export default {
+        data() {
+            return {
+                isDropdownOpen: false
+            }
+        },
         computed: {
             ...mapGetters({
                 funds: portfolioKeys.ns.GETTER_FUNDS
@@ -53,6 +60,9 @@
             }),
             endDay() {
                 this.randomizeStocks();
+            },
+            toggleDropdown() {
+                this.isDropdownOpen = !this.isDropdownOpen;
             }
         },
         mixins: [
