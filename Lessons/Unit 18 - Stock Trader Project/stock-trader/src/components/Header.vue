@@ -38,7 +38,7 @@
 <script>
     import { mapGetters, mapActions } from 'vuex';
     import * as portfolioKeys from '../store/modules/portfolio.keys';
-    import * as stocksKeys from '../store/modules/stocks.keys';
+    import stocksKeys from '../store/modules/stocks.keys';
     import formatCurrency from '../mixins/formatCurrency';
 
     export default {
@@ -49,7 +49,7 @@
         },
         methods: {
             ...mapActions({
-                randomizeStocks: stocksKeys.ACTION_RANDOMIZE_STOCKS
+                randomizeStocks: stocksKeys.ns.ACTION_RANDOMIZE_STOCKS
             }),
             endDay() {
                 this.randomizeStocks();

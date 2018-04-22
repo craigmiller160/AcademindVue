@@ -23,7 +23,7 @@
 
 <script>
     import { StockOrder } from '../../model/StockOrder';
-    import * as stocksKeys from '../../store/modules/stocks.keys';
+    import stocksKeys from '../../store/modules/stocks.keys';
     import * as portfolioKeys from '../../store/modules/portfolio.keys';
     import inputSelectMixin from '../../mixins/inputSelect';
     import formatCurrencyMixin from '../../mixins/formatCurrency';
@@ -41,7 +41,7 @@
         methods: {
             buyStock() {
                 const order = new StockOrder(this.stock.stockId, this.stock.price, this.quantity);
-                this.$store.dispatch(stocksKeys.ACTION_BUY_STOCK, order);
+                this.$store.dispatch(stocksKeys.ns.ACTION_BUY_STOCK, order);
                 this.quantity = 0;
             }
         },

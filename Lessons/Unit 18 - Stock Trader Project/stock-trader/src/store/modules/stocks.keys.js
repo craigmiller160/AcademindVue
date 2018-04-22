@@ -1,8 +1,20 @@
-export const MUTATION_SET_STOCKS = 'stocks/setStocks';
-export const MUTATION_RANDOM_STOCKS = 'stocks/randomStocks';
+const NAMESPACE = 'stocks';
 
-export const ACTION_BUY_STOCK = 'stocks/buyStock';
-export const ACTION_INIT_STOCKS = 'stocks/initStocks';
-export const ACTION_RANDOMIZE_STOCKS = 'stocks/randomizeStocks';
+const keys = {
+    MUTATION_SET_STOCKS: 'setStocks',
+    MUTATION_RANDOM_STOCKS: 'randomStocks',
 
-export const GETTER_STOCKS = 'stocks/stocks';
+    ACTION_BUY_STOCK: 'buyStock',
+    ACTION_INIT_STOCKS: 'initStocks',
+    ACTION_RANDOMIZE_STOCKS: 'randomizeStocks',
+
+    GETTER_STOCKS: 'stocks'
+};
+
+const keysNS = {};
+Object.keys(keys).forEach(key => keysNS[key] = `${NAMESPACE}/${keys[key]}`);
+
+export default {
+    ...keys,
+    ns: keysNS
+}

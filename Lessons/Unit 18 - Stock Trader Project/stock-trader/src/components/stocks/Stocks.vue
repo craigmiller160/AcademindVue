@@ -9,7 +9,7 @@
 <script>
     import Stock from './Stock';
     import { mapGetters } from 'vuex';
-    import * as stocksKeys from './../../store/modules/stocks.keys';
+    import stocksKeys from './../../store/modules/stocks.keys';
 
     export default {
         components: {
@@ -17,7 +17,7 @@
         },
         computed: {
             ...mapGetters({
-                stocks: stocksKeys.GETTER_STOCKS
+                stocks: stocksKeys.ns.GETTER_STOCKS
             })
         }
     }

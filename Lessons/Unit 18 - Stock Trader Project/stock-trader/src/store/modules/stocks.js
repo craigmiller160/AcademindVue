@@ -1,5 +1,6 @@
 import stocks from '../../data/stocks';
 import * as portfolioKeys from './portfolio.keys';
+import stocksKeys from './stocks.keys';
 
 const state = {
     stocks: []
@@ -21,10 +22,10 @@ const actions = {
         context.commit(portfolioKeys.MUTATION_BUY_STOCK, order, {root: true});
     },
     initStocks(context) {
-        context.commit('setStocks', stocks); //TODO how to make this local reference a constant
+        context.commit(stocksKeys.MUTATION_SET_STOCKS, stocks);
     },
     randomizeStocks(context) {
-        context.commit('randomStocks'); //TODO how to make this local reference a constant
+        context.commit(stocksKeys.MUTATION_RANDOM_STOCKS);
     }
 };
 

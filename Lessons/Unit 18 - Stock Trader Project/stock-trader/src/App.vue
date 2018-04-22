@@ -11,14 +11,14 @@
 
 <script>
     import Header from './components/Header';
-    import * as stocksKeys from './store/modules/stocks.keys';
+    import stocksKeys from './store/modules/stocks.keys';
 
     export default {
         components: {
             appHeader: Header
         },
         created() {
-            this.$store.dispatch(stocksKeys.ACTION_INIT_STOCKS);
+            this.$store.dispatch(stocksKeys.ns.ACTION_INIT_STOCKS);
         }
     }
 </script>
