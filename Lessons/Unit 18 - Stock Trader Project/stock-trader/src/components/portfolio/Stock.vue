@@ -1,18 +1,20 @@
 <template>
-    <div class="col-sm-6 col-md-4">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    {{ stock.name }}
-                    <small>(Price: {{ stock.price }} | Quantity: {{ stock.quantity }})</small>
-                </h3>
-            </div>
-            <div class="panel-body">
-                <div class="pull-left">
-                    <input id="quantity" type="number" class="form-control" placeholder="quantity" v-model="quantity" @focus="selectInputContents" />
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                {{ stock.name }}
+                <small>(Price: {{ stock.price }} | Quantity: {{ stock.quantity }})</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-8 pull-left">
+                    <input id="quantity" type="number" class="form-control" placeholder="quantity"
+                           :class="fieldClass" v-model="quantity" @focus="selectInputContents" />
                 </div>
-                <div class="pull-right">
-                    <button type="button" class="btn btn-info" @click="sellStock" :disabled="disableBuyBtn">Sell</button>
+                <div class="col-xs-4 pull-right">
+                    <button type="button" class="btn btn-info" @click="sellStock"
+                            :class="buttonClass" :disabled="disableBuyBtn">Sell</button>
                 </div>
             </div>
         </div>
@@ -42,7 +44,21 @@
         },
         computed: {
             disableBuyBtn() {
-                return this.quantity <= 0 || isNaN(this.quantity);
+                return this.quantity <= 0 || isNaN(this.quantity) || this.insufficientQuantity;
+            },
+            insufficientQuantity() {
+                return this.quantity > this.stock.quantity;
+            },
+            buttonClass() {
+                return {
+                    'btn-info': !this.insufficientQuantity,
+                    'btn-danger': this.insufficientQuantity
+                }
+            },
+            fieldClass() {
+                return {
+                    invalid: this.insufficientQuantity
+                }
             }
         },
         mixins: [
@@ -52,5 +68,7 @@
 </script>
 
 <style scoped>
-
+    .invalid {
+        border: 1px solid red;
+    }
 </style>
