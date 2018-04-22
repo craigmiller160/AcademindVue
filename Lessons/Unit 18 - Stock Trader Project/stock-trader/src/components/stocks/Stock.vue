@@ -1,18 +1,20 @@
 <template>
-    <div class="col-sm-6 col-md-4">
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    {{ stock.name }}
-                    <small>(Price: {{ stock.price }})</small>
-                </h3>
-            </div>
-            <div class="panel-body">
-                <div class="pull-left">
-                    <input id="quantity" type="number" class="form-control" placeholder="quantity" v-model="quantity" @focus="selectInputContents" />
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                {{ stock.name }}
+                <small>(Price: {{ stock.price }})</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-8 pull-left">
+                    <input id="quantity" type="number" class="form-control" :class="fieldClass" placeholder="quantity"
+                           v-model="quantity" @focus="selectInputContents" />
                 </div>
-                <div class="pull-right">
-                    <button type="button" class="btn btn-success" @click="buyStock" :disabled="disableBuyBtn">Buy</button>
+                <div class="col-xs-4 pull-right">
+                    <button type="button" class="btn" :class="buttonClass" @click="buyStock"
+                            :disabled="disableBuyBtn">Buy</button>
                 </div>
             </div>
         </div>
@@ -22,7 +24,9 @@
 <script>
     import { StockOrder } from '../../model/StockOrder';
     import * as stocksKeys from '../../store/modules/stocks.keys';
+    import * as portfolioKeys from '../../store/modules/portfolio.keys';
     import inputSelectMixin from '../../mixins/inputSelect';
+    import { mapGetters } from 'vuex';
 
     export default {
         props: [
@@ -41,8 +45,25 @@
             }
         },
         computed: {
+            ...mapGetters({
+                funds: portfolioKeys.GETTER_FUNDS
+            }),
             disableBuyBtn() {
-                return this.quantity <= 0 || isNaN(this.quantity);
+                return this.quantity <= 0 || isNaN(this.quantity) || this.insufficientFunds;
+            },
+            insufficientFunds() {
+                return (this.quantity * this.stock.price) > this.funds;
+            },
+            buttonClass() {
+                return {
+                    'btn-success': !this.insufficientFunds,
+                    'btn-danger': this.insufficientFunds
+                }
+            },
+            fieldClass() {
+                return {
+                    invalid: this.insufficientFunds
+                }
             }
         },
         mixins: [
@@ -52,5 +73,7 @@
 </script>
 
 <style scoped>
-
+    .invalid {
+        border: 1px solid red;
+    }
 </style>
