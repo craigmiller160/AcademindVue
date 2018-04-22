@@ -13,6 +13,7 @@
                         <a>Stocks</a>
                     </router-link>
                 </ul>
+                <strong class="navbar-text navbar-right">Funds: {{ funds | formatCurrency }}</strong>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="#">End Day</a>
@@ -35,8 +36,19 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
+    import * as portfolioKeys from '../store/modules/portfolio.keys';
+    import formatCurrency from '../mixins/formatCurrency';
+
     export default {
-        name: 'header'
+        computed: {
+            ...mapGetters({
+                funds: portfolioKeys.GETTER_FUNDS
+            })
+        },
+        mixins: [
+            formatCurrency
+        ]
     }
 </script>
 
