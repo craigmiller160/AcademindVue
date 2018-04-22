@@ -2,7 +2,7 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">
-                {{ stock.name }}
+                {{ stock.name }} - {{ totalValue | formatCurrency }}
                 <small>(Price: {{ stock.price | formatCurrency }} | Quantity: {{ stock.quantity }})</small>
             </h3>
         </div>
@@ -60,6 +60,9 @@
                 return {
                     invalid: this.insufficientQuantity
                 }
+            },
+            totalValue() {
+                return this.stock.price * this.stock.quantity;
             }
         },
         mixins: [

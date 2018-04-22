@@ -7,10 +7,10 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <router-link to="/portfolio" tag="li" active-class="active">
-                        <a>Portfolio</a>
+                        <a style="cursor: pointer;">Portfolio</a>
                     </router-link>
                     <router-link to="/stocks" tag="li" active-class="active">
-                        <a>Stocks</a>
+                        <a style="cursor: pointer;">Stocks</a>
                     </router-link>
                 </ul>
                 <strong class="navbar-text navbar-right">Funds: {{ funds | formatCurrency }} | Day: {{ day }}</strong>
