@@ -25,14 +25,19 @@ const mutations = {
     },
     sellStock(state, stockOrder) {
         const record = state.stocks.find(item => item.stockId === stockOrder.stockId);
-        if (record.quantity > stockOrder.quantity) { //TODO what if record doesn't exist?
-            record.quantity -= stockOrder.quantity;
+        if (record) {
+            if (record.quantity > stockOrder.quantity) {
+                record.quantity -= stockOrder.quantity;
+            }
+            else {
+                const recordIndex = state.stocks.indexOf(record);
+                state.stocks.splice(recordIndex, 1);
+            }
+            state.funds += (stockOrder.stockPrice * stockOrder.quantity);
         }
         else {
-            const recordIndex = state.stocks.indexOf(record);
-            state.stocks.splice(recordIndex, 1);
+            throw `Error! Cannot find matching stock. ID: ${stockOrder.stockId}`;
         }
-        state.funds += (stockOrder.stockPrice * stockOrder.quantity);
     },
     nextDay(state) {
         state.day++;
@@ -55,8 +60,13 @@ const actions = {
 const getters = {
     stockPortfolio(state, getters, rootState, rootGetters) {
         return state.stocks.map(stock => {
-            const record = rootGetters[stocksKeys.ns.GETTER_STOCKS].find(element => element.stockId === stock.stockId); //TODO what if record doesn't exist?
-            return new PortfolioDisplayStock(stock.stockId, stock.quantity, record.name, record.price);
+            const record = rootGetters[stocksKeys.ns.GETTER_STOCKS].find(element => element.stockId === stock.stockId);
+            if (record) {
+                return new PortfolioDisplayStock(stock.stockId, stock.quantity, record.name, record.price);
+            }
+            else {
+                throw `Error! Cannot find matching stock. ID: ${stock.stockId}`;
+            }
         });
     },
     funds(state) {
