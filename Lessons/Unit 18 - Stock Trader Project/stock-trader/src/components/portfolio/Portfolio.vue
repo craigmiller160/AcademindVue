@@ -13,9 +13,11 @@
         </div>
         <hr />
         <div class="row">
-            <div v-for="stock in stocks" class="col-md-4 col-sm-6 col-xs-12">
-                <app-stock :stock="stock"></app-stock>
-            </div>
+            <transition-group name="fade">
+                <div v-for="stock in stocks" :key="stock.stockId" class="col-md-4 col-sm-6 col-xs-12">
+                    <app-stock :stock="stock"></app-stock>
+                </div>
+            </transition-group>
         </div>
     </div>
 </template>
