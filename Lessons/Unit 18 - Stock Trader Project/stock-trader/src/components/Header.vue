@@ -24,10 +24,10 @@
                            @click="toggleDropdown">Save and Load <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a style="cursor: pointer;">Save Data</a>
+                                <a style="cursor: pointer;" @click="saveData">Save Data</a>
                             </li>
                             <li>
-                                <a style="cursor: pointer;">Load Data</a>
+                                <a style="cursor: pointer;" @click="loadData">Load Data</a>
                             </li>
                         </ul>
                     </li>
@@ -42,6 +42,7 @@
     import portfolioKeys from '../store/modules/portfolio.keys';
     import stocksKeys from '../store/modules/stocks.keys';
     import formatCurrency from '../mixins/formatCurrency';
+    import http from '../services/HttpService';
 
     export default {
         data() {
@@ -52,7 +53,9 @@
         computed: {
             ...mapGetters({
                 funds: portfolioKeys.ns.GETTER_FUNDS,
-                day: portfolioKeys.ns.GETTER_DAY
+                stockPortfolio: portfolioKeys.ns.GETTER_STOCK_PORTFOLIO,
+                day: portfolioKeys.ns.GETTER_DAY,
+                stocks: stocksKeys.ns.GETTER_STOCKS
             }),
             dropdownOpen() {
                 return {
@@ -71,6 +74,24 @@
             },
             toggleDropdown() {
                 this.isDropdownOpen = !this.isDropdownOpen;
+            },
+            saveData() {
+                this.isDropdownOpen = false;
+                const data = {
+                    funds: this.funds,
+                    stockPortfolio: this.stockPortfolio,
+                    stocks: this.stocks,
+                    day: this.day
+                };
+                http.saveData(data)
+                    .then(res => alert('Data saved successfully')) //TODO replace with bootstrap modal
+                    .catch(res => {
+                        alert('Error loading data'); //TODO replace with bootstrap modal
+                        console.log(res);
+                    });
+            },
+            loadData() {
+                this.isDropdownOpen = false;
             }
         },
         mixins: [
