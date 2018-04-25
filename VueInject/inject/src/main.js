@@ -1,38 +1,33 @@
 import Vue from 'vue';
 import App from './App';
 import injector from 'vue-inject';
+import store from './store/store';
 
-class MyService {
-    constructor() {
-        this.firstName = '';
-        this.lastName = '';
-        this.count = 0;
-        this.countChangeCallbacks = [];
-    }
-
-    addCountChangeCallback(callbackFn) {
-        this.countChangeCallbacks.push(callbackFn);
-    }
-
-    removeCountChangeCallback(callbackFn) {
-        const index = this.countChangeCallbacks.indexOf(callbackFn);
-        if (index >= 0) {
-            this.countChangeCallbacks.splice(index, 1);
-        }
+class CountService {
+    constructor(store) {
+        this.store = store;
     }
 
     incrementCount() {
-        this.count++;
-        // this.countChangeCallbacks.forEach(callback => callback(this.count));
-        return new Promise((resolve, reject) => resolve(this.count));
+        this.store.dispatch('incrementCount');
+    }
+
+    decrementCount() {
+        this.store.dispatch('decrementCount');
+    }
+
+    getCount() {
+        return this.store.getters.getCount;
     }
 }
 
 Vue.use(injector);
 
-injector.service('myService', MyService);
+injector.constant('store', store);
+injector.service('countService', ['store'], CountService);
 
 new Vue({
-  el: '#app',
-  render: h => h(App)
+    el: '#app',
+    store,
+    render: h => h(App)
 });

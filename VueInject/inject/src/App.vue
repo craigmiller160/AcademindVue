@@ -1,36 +1,33 @@
 <template>
     <div>
         <h1>Injector Test</h1>
-        <p>{{ count }}</p>
-        <button @click="increment">Increment</button>
+        <p>Count: {{ count }}</p>
+        <button type="button" @click="increment">Increment</button>
+        <button type="button" @click="decrement">Decrement</button>
     </div>
 </template>
 
 <script>
-    const updateCount = vue => {
-        return count => vue.count = count;
-    };
 
     export default {
-        dependencies: [
-          'myService'
-        ],
-        data () {
-            return {
-                count: 0
+        dependencies: {
+            myCount: 'countService'
+        },
+        created() {
+            console.log(this.myCount);
+            console.log(this.myCount.store);
+        },
+        computed: {
+            count() {
+                return this.myCount.getCount();
             }
-        },
-        beforeMount() {
-            // this.myService.addCountChangeCallback(updateCount(this));
-        },
-        beforeDestroy() {
-            // this.myService.removeCountChangeCallback(updateCount(this));
         },
         methods: {
             increment() {
-                this.myService.incrementCount()
-                    .then(count => this.count = count);
-                console.log(this.myService.count);
+                this.myCount.incrementCount();
+            },
+            decrement() {
+                this.myCount.decrementCount();
             }
         }
     }
