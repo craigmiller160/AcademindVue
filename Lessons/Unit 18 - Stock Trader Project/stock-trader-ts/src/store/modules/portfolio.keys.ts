@@ -2,7 +2,7 @@ import { createNamespaceKeys } from './moduleUtil';
 
 const NAMESPACE = 'portfolio';
 
-const keys: {[key: string]: string} = {
+const keys = {
     MUTATION_BUY_STOCK: 'buyStock',
     MUTATION_SELL_STOCK: 'sellStock',
     MUTATION_NEXT_DAY: 'nextDay',
