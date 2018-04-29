@@ -12,7 +12,7 @@
                     </v-card-media>
                     <v-card-text>
                         <div class="info--text">{{ meetup.date }} - Where it takes place</div>
-                        <div>lorem ipsum blah blah blah</div>
+                        <div>{{ meetup.description }}</div>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
