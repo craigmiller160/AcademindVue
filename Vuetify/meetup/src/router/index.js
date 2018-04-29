@@ -3,9 +3,10 @@ import Router from 'vue-router'
 import Home from '@/components/Home';
 import Meetups from '@/components/meetup/Meetups';
 import CreateMeetup from '@/components/meetup/CreateMeetup';
-import Profile from '@/components/User/Profile';
-import Signup from '@/components/User/Signup';
-import Signin from '@/components/User/Signin';
+import Profile from '@/components/user/Profile';
+import Signup from '@/components/user/Signup';
+import Signin from '@/components/user/Signin';
+import Meetup from '@/components/meetup/Meetup';
 
 Vue.use(Router);
 
@@ -26,6 +27,11 @@ export default new Router({
             path: '/meetups/new',
             name: 'CreateMeetup',
             component: CreateMeetup
+        },
+        {
+            path: '/meetups/:id',
+            name: 'Meetup',
+            component: Meetup
         },
         {
             path: '/profile',
