@@ -7,6 +7,8 @@
 <script lang="ts">
     import { createNamespaceKeys } from './store/modules/moduleUtil';
     import { Vue } from 'vue-property-decorator';
+    import Component, { mixins } from 'vue-class-component';
+    import { MyMixin } from './mixins/formatCurrency';
 
     const test = {
         one: 'One',
@@ -16,8 +18,11 @@
 
     createNamespaceKeys(test, '');
 
-    export default class App extends Vue {
-
+    @Component
+    export default class App extends mixins(MyMixin) {
+        created() {
+            this.helloWorld();
+        }
     }
 </script>
 
