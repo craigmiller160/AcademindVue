@@ -2,7 +2,7 @@
     <v-container>
         <v-layout row wrap class="mb-2">
             <v-flex xs12 sm6 class="text-sm-right text-xs-center">
-                <v-btn large router to="/meetups" class="info">Explor Meetups</v-btn>
+                <v-btn large router to="/meetups" class="info">Explore Meetups</v-btn>
             </v-flex>
             <v-flex xs12 sm6 class="text-sm-left text-xs-center">
                 <v-btn large router to="/meetups/new" class="info">Organize Meetup</v-btn>
@@ -31,22 +31,13 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
+
     export default {
-        data() {
-            return {
-                meetups: [
-                    {
-                        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/47/New_york_times_square-terabass.jpg',
-                        id: '1',
-                        title: 'Meetup in New York'
-                    },
-                    {
-                        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7a/Paris_-_Blick_vom_gro%C3%9Fen_Triumphbogen.jpg',
-                        id: '2',
-                        title: 'Meetup in Paris'
-                    }
-                ]
-            }
+        computed: {
+            ...mapGetters({
+                meetups: 'featuredMeetups'
+            })
         },
         methods: {
             onLoadMeetup(id) {
