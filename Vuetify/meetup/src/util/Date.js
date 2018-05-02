@@ -8,7 +8,7 @@ export const getLocaleString = (date = new Date()) => {
         hour12: true,
         weekday: 'short',
         year: 'numeric',
-        month: '2-digit',
+        month: 'short',
         day: '2-digit',
         hour: '2-digit',
         minute: '2-digit'
