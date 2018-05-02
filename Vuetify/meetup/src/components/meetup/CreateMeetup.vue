@@ -90,6 +90,8 @@
 </template>
 
 <script>
+    import * as dateUtil from '@/util/Date';
+
     export default {
         data() {
             return {
@@ -97,8 +99,8 @@
                 location: '',
                 imageUrl: '',
                 description: '',
-                date: null,
-                time: null
+                date: dateUtil.getDateString(),
+                time: dateUtil.getTimeString()
             }
         },
         computed: {
@@ -109,7 +111,7 @@
                     this.description !== '';
             },
             submittableDateTime() {
-                return new Date(this.date + 'T' + this.time);
+                return dateUtil.createDate(this.date, this.time);
             }
         },
         methods: {
