@@ -57,12 +57,30 @@
                         </v-flex>
                     </v-layout>
                     <v-layout row>
+                        <v-flex xs12 sm6 offset-sm3>
+                            <h4>Choose a Date & Time</h4>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row>
+                        <v-flex xs12 sm6 offset-sm3 class="mb-2">
+                            <v-date-picker v-model="date"></v-date-picker>
+                            <p>{{ date }}</p>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row>
+                        <v-flex xs12 sm6 offset-sm3>
+                            <v-time-picker v-model="time" format="ampm"></v-time-picker>
+                            <p>{{ time }}</p>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row>
                         <v-flex xs-12 sm6 offset-sm3>
                             <v-spacer></v-spacer>
                             <v-btn class="primary"
                                    :disabled="!formIsValid"
                                    type="submit"
                                    large>Create Meeting</v-btn>
+                            <p>{{ submittableDateTime }}</p>
                         </v-flex>
                     </v-layout>
                 </form>
@@ -78,7 +96,9 @@
                 title: '',
                 location: '',
                 imageUrl: '',
-                description: ''
+                description: '',
+                date: null,
+                time: null
             }
         },
         computed: {
@@ -87,6 +107,9 @@
                     this.location !== '' &&
                     this.imageUrl !== '' &&
                     this.description !== '';
+            },
+            submittableDateTime() {
+                return new Date(this.date + 'T' + this.time);
             }
         },
         methods: {
