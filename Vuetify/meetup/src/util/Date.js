@@ -1,17 +1,21 @@
 
-export const getDateString = (date) => {
-    if (!date) {
-        date = new Date();
-    }
-
+export const getDateString = (date = new Date()) => {
     return date.toJSON().replace(/T.*$/, '');
 };
 
-export const getTimeString = (time) => {
-    if (!time) {
-        time = new Date();
-    }
+export const getLocaleString = (date = new Date()) => {
+    return date.toLocaleString('en-US', {
+        hour12: true,
+        weekday: 'short',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+};
 
+export const getTimeString = (time = new Date()) => {
     return time.toJSON().replace(/^.*T/, '').replace(/\.\d\d\dZ$/, '');
 };
 
