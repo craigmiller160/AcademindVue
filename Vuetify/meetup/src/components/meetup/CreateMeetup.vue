@@ -80,7 +80,6 @@
                                    :disabled="!formIsValid"
                                    type="submit"
                                    large>Create Meeting</v-btn>
-                            <p>{{ submittableDateTime }}</p>
                         </v-flex>
                     </v-layout>
                 </form>
@@ -125,7 +124,7 @@
                     location: this.location,
                     imageUrl: this.imageUrl,
                     description: this.description,
-                    date: new Date()
+                    date: this.submittableDateTime
                 };
 
                 this.$store.dispatch('createMeetup', meetupData);

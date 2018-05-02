@@ -5,6 +5,7 @@ import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import colors from 'vuetify/es5/util/colors';
 import { store } from './store';
+import DateFormatMixin from '@/mixins/DateFormatMixin';
 
 Vue.use(Vuetify, {
     theme: {
@@ -16,6 +17,8 @@ Vue.use(Vuetify, {
 });
 
 Vue.config.productionTip = false;
+
+Vue.mixin(DateFormatMixin);
 
 /* eslint-disable no-new */
 new Vue({

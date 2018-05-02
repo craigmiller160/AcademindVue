@@ -18,7 +18,7 @@
                                 <v-card-title primary-title>
                                     <div>
                                         <h3 class="white--text mb-0">{{ meetup.title }}</h3>
-                                        <div>{{ meetup.date }}</div>
+                                        <div>{{ meetup.date | dateFormat }}</div>
                                     </div>
                                 </v-card-title>
                                 <v-card-actions>
@@ -38,6 +38,7 @@
 
 <script>
     import { mapGetters } from 'vuex';
+
 
     export default {
         computed: {
