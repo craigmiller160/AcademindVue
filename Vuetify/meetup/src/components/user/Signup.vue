@@ -79,9 +79,12 @@
             onSignup() {
                 if (this.$refs.form.validate()) {
                     console.log('Valid Signup');
-                    console.log(this.email);
-                    console.log(this.password);
-                    console.log(this.confirmPassword);
+                    const data = {
+                        email: this.email,
+                        password: this.password,
+                        confirmPassword: this.confirmPassword
+                    };
+                    this.$store.dispatch('signUserUp', data);
                 }
                 else {
                     console.log('Invalid Signup');

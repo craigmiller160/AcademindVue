@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as dateUtil from '@/util/Date';
+import * as firebase from 'firebase';
 
 Vue.use(Vuex);
 
@@ -35,11 +36,27 @@ export const store = new Vuex.Store({
         createMeetup(state, meetup) {
             meetup.id = '' + state.loadedMeetups.size;
             state.loadedMeetups.push(meetup);
+        },
+        setUser(state, user) {
+            state.user = user;
         }
     },
     actions: {
         createMeetup(context, meetup) {
             context.commit('createMeetup', meetup);
+        },
+        signUserUp(context, userInfo) {
+            firebase.auth().createUserWithEmailAndPassword(userInfo.email, userInfo.password)
+                .then(userResponse => {
+                    const newUser = {
+                        id: userResponse.uid,
+                        registeredMeetups: []
+                    };
+                    context.commit('setUser', newUser);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     },
     getters: {
