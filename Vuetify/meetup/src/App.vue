@@ -30,42 +30,61 @@
 </template>
 
 <script>
+    const signedInMenuItems = [
+        {
+            icon: 'supervisor_account',
+            title: 'View Meetups',
+            link: '/meetups'
+        },
+        {
+            icon: 'room',
+            title: 'Organize Meetup',
+            link: '/meetups/new'
+        },
+        {
+            icon: 'person',
+            title: 'Profile',
+            link: '/profile'
+        }
+    ];
+
+    const signedOutMenuItems = [
+        {
+            icon: 'face',
+            title: 'Sign Up',
+            link: '/signup'
+        },
+        {
+            icon: 'lock_open',
+            title: 'Sign In',
+            link: '/signin'
+        }
+    ];
+
+
     export default {
         data() {
             return {
-                sideNav: false,
-                menuItems: [
-                    {
-                        icon: 'supervisor_account',
-                        title: 'View Meetups',
-                        link: '/meetups'
-                    },
-                    {
-                        icon: 'room',
-                        title: 'Organize Meetup',
-                        link: '/meetups/new'
-                    },
-                    {
-                        icon: 'person',
-                        title: 'Profile',
-                        link: '/profile'
-                    },
-                    {
-                        icon: 'face',
-                        title: 'Sign Up',
-                        link: '/signup'
-                    },
-                    {
-                        icon: 'lock_open',
-                        title: 'Sign In',
-                        link: '/signin'
-                    }
-                ]
+                sideNav: false
             }
         },
         methods: {
             toggleSideNav() {
                 this.sideNav = !this.sideNav;
+            }
+        },
+        computed: {
+            menuItems() {
+                if (this.userIsAuthenticated) {
+                    return signedInMenuItems;
+                }
+                else {
+                    return signedOutMenuItems;
+                }
+            },
+            userIsAuthenticated() {
+                const user = this.$store.getters.user;
+                return user !== null && user !== undefined;
             }
         }
     }

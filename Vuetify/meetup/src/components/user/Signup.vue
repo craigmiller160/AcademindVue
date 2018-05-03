@@ -65,6 +65,7 @@
 
 <script>
     import ValidationRulesMixin from '@/mixins/ValidationRulesMixin';
+    import { mapGetters } from 'vuex';
 
     export default {
         data() {
@@ -92,13 +93,23 @@
             }
         },
         computed: {
+            ...mapGetters([
+                'user'
+            ]),
             comparePasswords() {
                 return this.password !== this.confirmPassword ? 'Passwords do not match' : true;
             }
         },
         mixins: [
             ValidationRulesMixin
-        ]
+        ],
+        watch: {
+            user(value) {
+                if (value !== null && value !== undefined) {
+                    this.$router.push('/');
+                }
+            }
+        }
     }
 </script>
 
