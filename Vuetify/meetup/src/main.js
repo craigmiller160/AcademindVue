@@ -7,6 +7,7 @@ import 'vuetify/dist/vuetify.min.css';
 import colors from 'vuetify/es5/util/colors';
 import { store } from './store';
 import DateFormatMixin from '@/mixins/DateFormatMixin';
+import Alert from '@/components/shared/Alert';
 
 Vue.use(Vuetify, {
     theme: {
@@ -18,8 +19,8 @@ Vue.use(Vuetify, {
 });
 
 Vue.config.productionTip = false;
-
 Vue.mixin(DateFormatMixin);
+Vue.component('app-alert', Alert);
 
 /* eslint-disable no-new */
 new Vue({

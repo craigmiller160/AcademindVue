@@ -1,5 +1,10 @@
 <template>
     <v-container>
+        <v-layout row v-if="error">
+            <v-flex xs12 sm6 offset-sm3>
+                <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
+            </v-flex>
+        </v-layout>
         <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
                 <v-card>
@@ -39,7 +44,12 @@
                                 </v-layout>
                                 <v-layout row>
                                     <v-flex xs12>
-                                        <v-btn class="primary" type="submit" :disabled="!valid">Sign in</v-btn>
+                                        <v-btn class="primary" type="submit" :disabled="!valid || loading" :loading="loading">
+                                            Sign in
+                                            <span slot="loader" class="custom-loader">
+                                                <v-icon light>cached</v-icon>
+                                            </span>
+                                        </v-btn>
                                     </v-flex>
                                 </v-layout>
                             </v-form>
@@ -54,6 +64,7 @@
 <script>
     import ValidationRulesMixin from '@/mixins/ValidationRulesMixin';
     import { mapGetters } from 'vuex';
+    import '@/css/loader.css';
 
     export default {
         data() {
@@ -76,11 +87,17 @@
                 else {
                     console.log('Invalid Signin');
                 }
+            },
+            onDismissed() {
+                console.log('Dismissed Alert');
+                this.$store.dispatch('clearError');
             }
         },
         computed: {
             ...mapGetters([
-                'user'
+                'user',
+                'error',
+                'loading'
             ])
         },
         mixins: [
