@@ -24,6 +24,7 @@
                                         </v-text-field>
                                     </v-flex>
                                 </v-layout>
+                                <!-- TODO definitely an issue with the comparePasswords validation function, won't truly keep both fields in sync. Maybe need vuelidate? -->
                                 <v-layout row>
                                     <v-flex xs12>
                                         <v-text-field
@@ -32,7 +33,7 @@
                                             id="password"
                                             v-model="password"
                                             type="password"
-                                            :rules="[requiredRule, comparePasswords]"
+                                            :rules="[requiredRule]"
                                             required>
                                         </v-text-field>
                                     </v-flex>
@@ -64,15 +65,15 @@
 </template>
 
 <script>
+    import ValidationRulesMixin from '@/mixins/ValidationRulesMixin';
+
     export default {
         data() {
             return {
                 email: '',
                 password: '',
                 confirmPassword: '',
-                valid: true,
-                requiredRule: v => !!v || 'Field is required',
-                emailRule: v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+                valid: true
             }
         },
         methods: {
@@ -85,11 +86,11 @@
         computed: {
             comparePasswords() {
                 return this.password !== this.confirmPassword ? 'Passwords do not match' : true;
-            },
-            canBeSubmitted() {
-                return this.email && this.password && this.confirmPassword;
             }
-        }
+        },
+        mixins: [
+            ValidationRulesMixin
+        ]
     }
 </script>
 
