@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import App from './App';
+import * as firebase from 'firebase';
 import router from './router';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
@@ -25,5 +26,16 @@ new Vue({
     el: '#app',
     router,
     store,
-    render: h => h(App)
+    render: h => h(App),
+    created() {
+        firebase.initializeApp({
+            apiKey: 'AIzaSyD-15Jru9UJUJQtUVnhEL5K49twKeTcJ2g',
+            authDomain: 'vue-m-aa271.firebaseapp.com',
+            databaseURL: 'https://vue-m-aa271.firebaseio.com',
+            projectId: 'vue-m-aa271',
+            storageBucket: ''
+            // storageBucket: 'vue-m-aa271.appspot.com',
+            // messagingSenderId: '1023549679990'
+        });
+    }
 });
