@@ -24,7 +24,6 @@
                                         </v-text-field>
                                     </v-flex>
                                 </v-layout>
-                                <!-- TODO definitely an issue with the comparePasswords validation function, won't truly keep both fields in sync. Maybe need vuelidate? -->
                                 <v-layout row>
                                     <v-flex xs12>
                                         <v-text-field
@@ -78,9 +77,15 @@
         },
         methods: {
             onSignup() {
-                console.log(this.email);
-                console.log(this.password);
-                console.log(this.confirmPassword);
+                if (this.$refs.form.validate()) {
+                    console.log('Valid Signup');
+                    console.log(this.email);
+                    console.log(this.password);
+                    console.log(this.confirmPassword);
+                }
+                else {
+                    console.log('Invalid Signup');
+                }
             }
         },
         computed: {
