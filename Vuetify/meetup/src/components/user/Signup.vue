@@ -5,7 +5,7 @@
                 <v-card>
                     <v-card-text>
                         <v-container>
-                            <form @submit.prevent="onSignup">
+                            <v-form v-model="valid" @submit.prevent="onSignup" ref="form">
                                 <v-layout row>
                                     <v-flex xs12>
                                         <h2>Signup for Meetups</h2>
@@ -19,6 +19,7 @@
                                             id="email"
                                             v-model="email"
                                             type="email"
+                                            :rules="[requiredRule, emailRule]"
                                             required>
                                         </v-text-field>
                                     </v-flex>
@@ -31,6 +32,7 @@
                                             id="password"
                                             v-model="password"
                                             type="password"
+                                            :rules="[requiredRule, comparePasswords]"
                                             required>
                                         </v-text-field>
                                     </v-flex>
@@ -43,15 +45,16 @@
                                             id="confirmPassword"
                                             v-model="confirmPassword"
                                             type="password"
-                                            :rules="[comparePasswords]">
+                                            :rules="[requiredRule, comparePasswords]">
                                         </v-text-field>
                                     </v-flex>
                                 </v-layout>
-                                <v-layout row></v-layout>
-                                <v-flex xs12>
-                                    <v-btn class="primary" type="submit">Sign up</v-btn>
-                                </v-flex>
-                            </form>
+                                <v-layout row>
+                                    <v-flex xs12>
+                                        <v-btn class="primary" type="submit" :disabled="!valid">Sign up</v-btn>
+                                    </v-flex>
+                                </v-layout>
+                            </v-form>
                         </v-container>
                     </v-card-text>
                 </v-card>
@@ -66,7 +69,10 @@
             return {
                 email: '',
                 password: '',
-                confirmPassword: ''
+                confirmPassword: '',
+                valid: true,
+                requiredRule: v => !!v || 'Field is required',
+                emailRule: v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
             }
         },
         methods: {
@@ -79,6 +85,9 @@
         computed: {
             comparePasswords() {
                 return this.password !== this.confirmPassword ? 'Passwords do not match' : true;
+            },
+            canBeSubmitted() {
+                return this.email && this.password && this.confirmPassword;
             }
         }
     }
