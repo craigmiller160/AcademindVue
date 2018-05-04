@@ -24,7 +24,9 @@
             </v-toolbar-items>
         </v-toolbar>
         <main>
-            <router-view></router-view>
+            <v-slide-y-transition mode="out-in">
+                <router-view></router-view>
+            </v-slide-y-transition>
         </main>
     </v-app>
 </template>
