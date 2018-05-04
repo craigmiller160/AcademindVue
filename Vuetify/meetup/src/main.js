@@ -39,6 +39,12 @@ new Vue({
             // messagingSenderId: '1023549679990'
         });
 
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.$store.dispatch('autoSignIn', user);
+            }
+        });
+
         this.$store.dispatch('loadMeetups');
     }
 });

@@ -31,7 +31,6 @@ export const store = new Vuex.Store({
     },
     mutations: {
         createMeetup(state, meetup) {
-            meetup.id = '' + state.loadedMeetups.size;
             state.loadedMeetups.push(meetup);
         },
         setUser(state, user) {
@@ -60,6 +59,7 @@ export const store = new Vuex.Store({
                     Object.keys(obj).forEach(key => {
                         const meetup = obj[key];
                         meetup.id = key;
+                        meetup.date = new Date(meetup.date); //Date string to Date object
                         meetups.push(meetup);
                     });
                     context.commit('setLoadedMeetups', meetups);
@@ -71,12 +71,14 @@ export const store = new Vuex.Store({
                 });
         },
         createMeetup(context, meetup) {
+            meetup.creatorId = context.getters.user.id;
+
             const firebaseMeetup = Object.assign({}, meetup);
             firebaseMeetup.date = firebaseMeetup.date.toISOString();
 
             firebase.database().ref('meetups').push(firebaseMeetup)
                 .then(data => {
-                    console.log(data);
+                    console.log(data.key);
                     context.commit('createMeetup', {
                         ...meetup,
                         id: data.key
@@ -121,6 +123,21 @@ export const store = new Vuex.Store({
                     context.commit('setError', error);
                     console.log(error);
                 })
+        },
+        autoSignIn(context, userInfo) {
+            context.commit('setUser', {
+                id: userInfo.uid,
+                registeredMeetups: []
+            });
+        },
+        logout(context) {
+            firebase.auth().signOut()
+                .then(data => {
+                    context.commit('setUser', null);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
         clearError(context) {
             context.commit('clearError');

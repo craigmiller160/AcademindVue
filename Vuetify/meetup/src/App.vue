@@ -47,6 +47,11 @@
             icon: 'person',
             title: 'Profile',
             link: '/profile'
+        },
+        {
+            icon: 'exit_to_app',
+            title: 'Logout',
+            link: '/logout'
         }
     ];
 
