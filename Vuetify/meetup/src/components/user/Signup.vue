@@ -1,8 +1,11 @@
 <template>
     <v-container>
-        <v-layout row v-if="error">
+        <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-                <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
+                <!--<app-alert @dismissed="onDismissed" :text="error.message"></app-alert>-->
+                <v-alert error dismissible @input="onDismissed" :value="hasError" transition="slide-y-transition">
+                    {{ errorMessage }}
+                </v-alert>
             </v-flex>
         </v-layout>
         <v-layout row>
@@ -13,7 +16,7 @@
                             <v-form v-model="valid" @submit.prevent="onSignup" ref="form">
                                 <v-layout row>
                                     <v-flex xs12>
-                                        <h2>Signup for Meetups</h2>
+                                        <h2>Sign Up for Meetups</h2>
                                     </v-flex>
                                 </v-layout>
                                 <v-layout row>
@@ -57,7 +60,7 @@
                                 <v-layout row>
                                     <v-flex xs12>
                                         <v-btn color="primary" type="submit" :disabled="!valid || loading" :loading="loading">
-                                            Sign up
+                                            Sign Up
                                             <span slot="loader" class="custom-loader">
                                                 <v-icon light>cached</v-icon>
                                             </span>
@@ -115,6 +118,12 @@
             ]),
             comparePasswords() {
                 return this.password !== this.confirmPassword ? 'Passwords do not match' : true;
+            },
+            errorMessage() {
+                return this.error ? this.error.message : '';
+            },
+            hasError() {
+                return this.error !== null && this.error !== undefined;
             }
         },
         mixins: [
