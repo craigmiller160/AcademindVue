@@ -9,8 +9,13 @@
             </v-flex>
         </v-layout>
         <v-layout row wrap>
+            <v-flex xs12 class="text-xs-center">
+                <v-progress-circular indeterminate class="primary--text" :width="7" :size="70" v-if="loading"></v-progress-circular>
+            </v-flex>
+        </v-layout>
+        <v-layout row wrap>
             <v-flex xs12>
-                <v-carousel style="cursor: pointer;">
+                <v-carousel style="cursor: pointer;" v-if="!loading">
                     <v-carousel-item v-for="(meetup, index) in meetups"
                                      :src="meetup.imageUrl"
                                      :key="meetup.id"
@@ -36,7 +41,8 @@
     export default {
         computed: {
             ...mapGetters({
-                meetups: 'featuredMeetups'
+                meetups: 'featuredMeetups',
+                loading: 'loading'
             })
         },
         methods: {

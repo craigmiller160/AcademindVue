@@ -38,5 +38,7 @@ new Vue({
             // storageBucket: 'vue-m-aa271.appspot.com',
             // messagingSenderId: '1023549679990'
         });
+
+        this.$store.dispatch('loadMeetups');
     }
 });

@@ -45,11 +45,46 @@ export const store = new Vuex.Store({
         },
         clearError(state) {
             state.error = null;
+        },
+        setLoadedMeetups(state, meetups) {
+            state.loadedMeetups = meetups;
         }
     },
     actions: {
+        loadMeetups(context) {
+            context.commit('setLoading', true);
+            firebase.database().ref('meetups').once('value')
+                .then(data => {
+                    const meetups = [];
+                    const obj = data.val();
+                    Object.keys(obj).forEach(key => {
+                        const meetup = obj[key];
+                        meetup.id = key;
+                        meetups.push(meetup);
+                    });
+                    context.commit('setLoadedMeetups', meetups);
+                    context.commit('setLoading', false);
+                })
+                .catch(error => {
+                    console.log(error);
+                    context.commit('setLoading', false);
+                });
+        },
         createMeetup(context, meetup) {
-            context.commit('createMeetup', meetup);
+            const firebaseMeetup = Object.assign({}, meetup);
+            firebaseMeetup.date = firebaseMeetup.date.toISOString();
+
+            firebase.database().ref('meetups').push(firebaseMeetup)
+                .then(data => {
+                    console.log(data);
+                    context.commit('createMeetup', {
+                        ...meetup,
+                        id: data.key
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
         signUserUp(context, userInfo) {
             context.commit('setLoading', true);
