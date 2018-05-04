@@ -31,12 +31,12 @@
                     </v-layout>
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm3>
-                            <v-text-field
-                                name="imageUrl"
-                                label="Image URL"
-                                id="imageUrl"
-                                v-model="imageUrl"
-                                required></v-text-field>
+                            <v-btn raised class="primary" @click="onPickFile">Upload Image</v-btn>
+                            <input ref="fileInput"
+                                   @change="onFilePicked"
+                                   type="file"
+                                   style="display: none;"
+                                   accept=".jpg, .jpeg, .png, .gif" />
                         </v-flex>
                     </v-layout>
                     <v-layout row>
@@ -97,7 +97,8 @@
                 imageUrl: '',
                 description: '',
                 date: dateUtil.getDateString(),
-                time: dateUtil.getTimeString()
+                time: dateUtil.getTimeString(),
+                image: null
             }
         },
         computed: {
@@ -105,7 +106,8 @@
                 return this.title !== '' &&
                     this.location !== '' &&
                     this.imageUrl !== '' &&
-                    this.description !== '';
+                    this.description !== '' &&
+                    this.image !== null;
             },
             submittableDateTime() {
                 return dateUtil.createDate(this.date, this.time);
@@ -120,13 +122,32 @@
                 const meetupData = {
                     title: this.title,
                     location: this.location,
-                    imageUrl: this.imageUrl,
+                    image: this.image,
                     description: this.description,
                     date: this.submittableDateTime
                 };
 
                 this.$store.dispatch('createMeetup', meetupData);
                 this.$router.push('/meetups');
+            },
+            onPickFile() {
+                this.$refs.fileInput.click();
+            },
+            onFilePicked(event) {
+                const files = event.target.files;
+                if (files) {
+                    const filename = files[0].name;
+                    if (filename.lastIndexOf('.') <= 0) {
+                        return alert('Please add a valid file');
+                    }
+
+                    const fileReader = new FileReader();
+                    fileReader.addEventListener('load', () => {
+                        this.imageUrl = fileReader.result;
+                    });
+                    fileReader.readAsDataURL(files[0]);
+                    this.image = files[0];
+                }
             }
         }
     }

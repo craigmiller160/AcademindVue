@@ -56,13 +56,16 @@ export const store = new Vuex.Store({
                 .then(data => {
                     const meetups = [];
                     const obj = data.val();
-                    Object.keys(obj).forEach(key => {
-                        const meetup = obj[key];
-                        meetup.id = key;
-                        meetup.date = new Date(meetup.date); //Date string to Date object
-                        meetups.push(meetup);
-                    });
-                    context.commit('setLoadedMeetups', meetups);
+                    if (obj) {
+                        Object.keys(obj).forEach(key => {
+                            const meetup = obj[key];
+                            meetup.id = key;
+                            meetup.date = new Date(meetup.date); //Date string to Date object
+                            meetups.push(meetup);
+                        });
+                        context.commit('setLoadedMeetups', meetups);
+                    }
+
                     context.commit('setLoading', false);
                 })
                 .catch(error => {
@@ -70,19 +73,41 @@ export const store = new Vuex.Store({
                     context.commit('setLoading', false);
                 });
         },
-        createMeetup(context, meetup) {
-            meetup.creatorId = context.getters.user.id;
+        createMeetup(context, payload) {
+            const meetup = {
+                title: payload.title,
+                location: payload.location,
+                description: payload.description,
+                date: payload.date.toISOString(),
+                creatorId: context.getters.user.id
+            };
 
-            const firebaseMeetup = Object.assign({}, meetup);
-            firebaseMeetup.date = firebaseMeetup.date.toISOString();
-
-            firebase.database().ref('meetups').push(firebaseMeetup)
+            let imageUrlRef;
+            let keyRef;
+            firebase.database().ref('meetups').push(meetup)
                 .then(data => {
-                    console.log(data.key);
-                    context.commit('createMeetup', {
-                        ...meetup,
-                        id: data.key
+                    return data.key;
+                })
+                .then(key => {
+                    keyRef = key;
+                    const filename = payload.image.name;
+                    const ext = filename.slice(filename.lastIndexOf('.'));
+                    return firebase.storage().ref(`meetups/${key}.${ext}`).put(payload.image);
+                })
+                .then(fileData => {
+                    imageUrlRef = fileData.metadata.downloadURLs[0];
+                    return firebase.database().ref('meetups').child(keyRef).update({
+                        imageUrl: imageUrlRef
                     });
+                })
+                .then(() => {
+                    const newMeetup = {
+                        ...meetup,
+                        id: keyRef,
+                        imageUrl: imageUrlRef
+                    };
+                    newMeetup.date = new Date(newMeetup.date);
+                    context.commit('createMeetup', newMeetup);
                 })
                 .catch(error => {
                     console.log(error);

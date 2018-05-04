@@ -34,7 +34,7 @@ new Vue({
             authDomain: 'vue-m-aa271.firebaseapp.com',
             databaseURL: 'https://vue-m-aa271.firebaseio.com',
             projectId: 'vue-m-aa271',
-            storageBucket: ''
+            storageBucket: 'gs://vue-m-aa271.appspot.com'
             // storageBucket: 'vue-m-aa271.appspot.com',
             // messagingSenderId: '1023549679990'
         });
