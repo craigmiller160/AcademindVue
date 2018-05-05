@@ -142,6 +142,7 @@ export const store = new Vuex.Store({
                         registeredMeetups: []
                     };
                     context.commit('setUser', newUser);
+                    context.dispatch('loadMeetups');
                 })
                 .catch(error => {
                     context.commit('setLoading', false);
