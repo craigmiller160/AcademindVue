@@ -48,6 +48,9 @@ export const store = new Vuex.Store({
                         });
                         context.commit('setLoadedMeetups', meetups);
                     }
+                    else {
+                        context.commit('setLoadedMeetups', []);
+                    }
 
                     context.commit('setLoading', false);
                 })
@@ -57,6 +60,7 @@ export const store = new Vuex.Store({
                 });
         },
         createMeetup(context, payload) {
+            context.commit('setLoading', true);
             const meetup = {
                 title: payload.title,
                 location: payload.location,
@@ -91,9 +95,11 @@ export const store = new Vuex.Store({
                     };
                     newMeetup.date = new Date(newMeetup.date);
                     context.commit('createMeetup', newMeetup);
+                    context.commit('setLoading', false);
                 })
                 .catch(error => {
                     console.log(error);
+                    context.commit('setLoading', false);
                 });
         },
         signUserUp(context, userInfo) {
