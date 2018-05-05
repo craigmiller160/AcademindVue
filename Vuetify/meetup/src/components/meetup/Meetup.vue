@@ -9,7 +9,11 @@
             <v-flex xs12>
                 <v-card>
                     <v-card-title>
-                        <h3 class="primary--text">{{ meetup.title }}</h3>
+                        <h2 class="primary--text">{{ meetup.title }}</h2>
+                        <template v-if="userIsCreator">
+                            <v-spacer></v-spacer>
+                            <app-edit-meetup-details-dialog :meetup="meetup"></app-edit-meetup-details-dialog>
+                        </template>
                     </v-card-title>
                     <v-card-media
                         :src="meetup.imageUrl"
@@ -31,6 +35,7 @@
 
 <script>
     import { mapGetters } from 'vuex';
+    import EditMeetupDetailsDialog from '@/components/meetup/Edit/EditMeetupDetailsDialog';
 
     export default {
         props: [
@@ -42,7 +47,21 @@
             ]),
             meetup() {
                 return this.$store.getters.loadedMeetup(this.id)
+            },
+            userIsAuthenticated() {
+                const user = this.$store.getters.user;
+                return user !== null && user !== undefined;
+            },
+            userIsCreator() {
+                if (!this.userIsAuthenticated) {
+                    return false;
+                }
+
+                return this.$store.getters.user.id === this.meetup.creatorId;
             }
+        },
+        components: {
+            'app-edit-meetup-details-dialog': EditMeetupDetailsDialog
         }
     }
 </script>

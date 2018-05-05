@@ -30,6 +30,24 @@ export const store = new Vuex.Store({
         },
         setLoadedMeetups(state, meetups) {
             state.loadedMeetups = meetups;
+        },
+        updateMeetup(state, payload) {
+            const meetup = state.loadedMeetups.find(meetup => meetup.id === payload.id);
+            if (!meetup) {
+                throw `No meetup found for id: ${payload.id}`;
+            }
+
+            if (payload.title) {
+                meetup.title = payload.title;
+            }
+
+            if (meetup.description) {
+                meetup.description = payload.description;
+            }
+
+            if (meetup.date) {
+                meetup.date = payload.date;
+            }
         }
     },
     actions: {
@@ -102,6 +120,32 @@ export const store = new Vuex.Store({
                     context.commit('setLoading', false);
                 });
         },
+        updateMeetupData(context, payload) {
+            context.commit('setLoading', true);
+            const updateObj = {};
+            if (payload.title) {
+                updateObj.title = payload.title;
+            }
+
+            if (payload.description) {
+                updateObj.description = payload.description;
+            }
+
+            if (payload.date) {
+                updateObj.date = payload.date;
+            }
+
+            firebase.database().ref('meetups').child(payload.id).update(updateObj)
+                .then(() => {
+                    context.commit('setLoading', false);
+                    context.commit('updateMeetup', payload);
+                })
+                .catch(error => {
+                    console.log(error);
+                    context.commit('setLoading', false);
+                })
+        }
+        ,
         signUserUp(context, userInfo) {
             context.commit('setLoading', true);
             context.commit('clearError');
